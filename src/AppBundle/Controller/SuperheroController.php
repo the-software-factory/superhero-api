@@ -41,9 +41,9 @@ class SuperheroController extends Controller
     }
 
     /**
-     * @Route("/detail/{superhero}", name="detail")
+     * @Route("/detail", name="detail")
      */
-    public function detailActon(Request $request, Superhero $superhero){
+    /*public function detailActon(Request $request){
 
         return $this->render(
           'default/detail.html.twig',
@@ -51,5 +51,5 @@ class SuperheroController extends Controller
                 'superhero' => $superhero,
             ]
         );
-    }
+    }*/
 }
