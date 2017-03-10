@@ -35,7 +35,7 @@ class SuperheroController extends Controller
         $superhero->setName('Superman');
         $superhero->setRealName('Clark Kent');
         $superhero->setLocation('Metropolis');
-        $superhero->setHasCloak(true);
+        $superhero->setHasCloak(false);
         $superhero->setBirthDate(new \DateTime('04/25/1975'));
 
         return $this->render(

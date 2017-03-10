@@ -40,6 +40,22 @@ class Superhero
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @param mixed $realName
      */
     public function setRealName($realName)
@@ -95,21 +111,14 @@ class Superhero
         $this->birthDate = $birthDate;
     }
 
+    //generate a string value from the boolean hasCloak
     /**
      * @return string
      */
-    public function getName(): string
-    {
-        return $this->name;
+    public function hasCloakToString() : string{
+        if($this->hasCloak == true)
+            return "Has cloak";
+        else
+            return "Hasn't cloak";
     }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
-
-
 }
