@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        <li>Nome: {{ superhero.name }}
+        <li>Nome reale: {{ superhero.realName }}
+        <li>Luogo: {{ superhero.location }}
+        <li>Ha il mantello?: {{ superhero.hasCloak }}
+        <li>Data di nascita: {{ superhero.birthDate | date}}
+    </ul>
+{% endblock %}
