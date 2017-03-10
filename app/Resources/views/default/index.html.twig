@@ -2,8 +2,13 @@
 
 {% block body %}
     <p>
-        "Walcome to superheroes website!"
+        "This is the list of our superheroes!"
     </p>
+    <ul>
+        {% for superhero in superheroes %}
+            <li>{{ superhero.name }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 
 {% block stylesheets %}
