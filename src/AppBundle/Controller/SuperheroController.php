@@ -7,6 +7,9 @@ use AppBundle\Model\HeroList;
 use AppBundle\Model\Superhero;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
 
 //rotta di base, cioe tutte le altre devono avere questa prima
@@ -86,4 +89,6 @@ class SuperheroController extends Controller
             ]
         );
     }
+
+
 }
