@@ -3,13 +3,47 @@
 {% block body %}
     <div class="container">
         <div class="list-group">
-            <ul>
+            <table class="table table-striped">
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Real Name</th>
+                </tr>
                 {% for superhero in superheroes %}
-                    <a href="{{ path('detail', {'id' : superhero.id}) }}" class="list-group-item active">
-                        {{ superhero.name }}
-                    </a>
+                    <tr>
+                        <td>{{ superhero.id }}</td>
+                        <td>{{ superhero.name }}</td>
+                        <td>{{ superhero.realName }}</td>
+                        <td>
+                            <a href="{{ path('detail', {'id' : superhero.id}) }}" class="glyphicon glyphicon-eye-open"></a>
+                            <a href="{{ path('detail', {'id' : superhero.id}) }}" class="glyphicon glyphicon-pencil"></a>
+                            <a href="{{ path('detail', {'id' : superhero.id}) }}" class="glyphicon glyphicon-trash"></a>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </ul>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h3>Add a new superhero</h3>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Hero name" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Real name" aria-describedby="basic-addon2">
+        </div>
+
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Location">
+        </div>
+
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Birth date">
+        </div>
+
+        <div class="input-group">
+            <input type="checkbox" name="Has cloak" />Has Cloak
         </div>
     </div>
 {% endblock %}

@@ -1,23 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <ul>
-        <li><h1>Nome: {{ superhero.name }}</h1>
-        <li>Nome reale: {{ superhero.realName }}
-        <li>Luogo: {{ superhero.location }}
-        <li>Ha il mantello?
-            {% if superhero.hasCloak %}
-                <span class="glyphicon glyphicon-ok"></span>
-            {% else %}
-                <span class="glyphicon glyphicon-remove"></span>
-            {% endif %}
-        </li>
-        <li>Data di nascita: {{ superhero.birthDate | date}}
-    </ul>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">{{ superhero.name }}</div>
+
+        <!-- List group -->
+        <ul class="list-group">
+            <li class="list-group-item">Real Name: {{ superhero.realName }}</li>
+            <li class="list-group-item">Place: {{ superhero.location }}</li>
+            <li class="list-group-item">Has cloak?
+                {% if superhero.hasCloak %}
+                    <span class="glyphicon glyphicon-ok"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-remove"></span>
+                {% endif %}
+            </li>
+            <li class="list-group-item">Birthdate: {{ superhero.birthDate | date}}</li>
+        </ul>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
-    {% stylesheets 'bundles/css/list.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% stylesheets 'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
