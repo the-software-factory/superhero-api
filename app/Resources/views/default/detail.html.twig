@@ -5,13 +5,19 @@
         <li><h1>Nome: {{ superhero.name }}</h1>
         <li>Nome reale: {{ superhero.realName }}
         <li>Luogo: {{ superhero.location }}
-        <li>{{ superhero.hasCloakToString }}
+        <li>Ha il mantello?
+            {% if superhero.hasCloak %}
+                <span class="glyphicon glyphicon-ok"></span>
+            {% else %}
+                <span class="glyphicon glyphicon-remove"></span>
+            {% endif %}
+        </li>
         <li>Data di nascita: {{ superhero.birthDate | date}}
     </ul>
 {% endblock %}
 
 {% block stylesheets %}
-    {% stylesheets 'list.css' filter='cssrewrite' %}
+    {% stylesheets 'bundles/css/list.css' filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}

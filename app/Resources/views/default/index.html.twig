@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <ul>
-        {% for superhero in superheroes %}
-            <li><a href="{{ path('detail', {'id' : superhero.id}) }}"> {{ superhero.name }} </a></li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <div class="list-group">
+            <ul>
+                {% for superhero in superheroes %}
+                    <a href="{{ path('detail', {'id' : superhero.id}) }}" class="list-group-item active">
+                        {{ superhero.name }}
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}
 
 

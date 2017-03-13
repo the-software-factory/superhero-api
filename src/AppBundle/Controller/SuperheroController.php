@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @Route("superhero")
  */
-
 class SuperheroController extends Controller
 {
     /**
@@ -61,7 +60,7 @@ class SuperheroController extends Controller
         $superhero->setName('Superman');
         $superhero->setRealName('Clark Kent');
         $superhero->setLocation('Metropolis');
-        $superhero->setHasCloak(true);
+        $superhero->setHasCloak(false);
         $superhero->setBirthDate(new \DateTime('04/25/1975'));
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -69,5 +68,22 @@ class SuperheroController extends Controller
         $entityManager->flush();
 
         return $this->redirectToRoute('detail', ['id' => $superhero->getId()]);
+    }
+
+    /**
+     * @Route("/allHero", name="allHero")
+     */
+    public function allHero(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(Superhero::class);
+
+        $superheroes = $repository->findAll();
+
+        return $this->render(
+            'default/allHero.html.twig',
+            [
+                'superheroes' => $superheroes,
+            ]
+        );
     }
 }
