@@ -1,35 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <p>
-        This is the list of our superheroes!
-    </p>
     <ul>
-        <li>
-            {% for superhero in superheroes %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{{ superhero.name }}</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul>
-                            <li>Nome: {{ superhero.name }}
-                            <li>Nome reale: {{ superhero.realName }}
-                            <li>Luogo: {{ superhero.location }}
-                            <li>{{ superhero.hasCloakToString }}
-                            <li>Data di nascita: {{ superhero.birthDate | date}}
-                        </ul>
-                    </div>
-                </div>
-            {% endfor %}
-        </li>
+        {% for superhero in superheroes %}
+            <li><a href="{{ path('detail', {'id' : superhero.id}) }}"> {{ superhero.name }} </a></li>
+        {% endfor %}
     </ul>
 {% endblock %}
 
-{% block stylesheets %}
-    {% stylesheets 'list.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
+
 
 

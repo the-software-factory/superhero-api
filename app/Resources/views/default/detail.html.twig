@@ -2,10 +2,16 @@
 
 {% block body %}
     <ul>
-        <li>Nome: {{ superhero.name }}
+        <li><h1>Nome: {{ superhero.name }}</h1>
         <li>Nome reale: {{ superhero.realName }}
         <li>Luogo: {{ superhero.location }}
         <li>{{ superhero.hasCloakToString }}
         <li>Data di nascita: {{ superhero.birthDate | date}}
     </ul>
+{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets 'list.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
