@@ -59,7 +59,7 @@ class SuperheroController extends Controller
         $form = $this->createForm(SuperheroForm::class, $superhero);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($superhero);
             $entityManager->flush();
