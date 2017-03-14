@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\SuperheroForm;
 use AppBundle\Model\Superhero;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -48,21 +50,26 @@ class SuperheroController extends Controller
 
     /**
      * @Route("/create", name="create")
+     * @Method({"GET", "POST"})
      */
     public function createAction(Request $request)
     {
         $superhero = new Superhero();
-        $superhero->setName('Superman');
-        $superhero->setRealName('Clark Kent');
-        $superhero->setLocation('Metropolis');
-        $superhero->setHasCloak(true);
-        $superhero->setBirthDate(new \DateTime('04/25/1975'));
+        $form = $this->createForm(SuperheroForm::class, $superhero);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($superhero);
+            $entityManager->flush();
+            return $this->redirectToRoute('detail', ['id' => $superhero->getId()]);
+        }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($superhero);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('detail', [ 'id' => $superhero->getId() ]);
+        return $this->render(
+            'default/create.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -70,7 +77,7 @@ class SuperheroController extends Controller
      */
     public function allHeroAction(Request $request)
     {
-        $repository=$this->getDoctrine()->getRepository(Superhero::class);
+        $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superheroes = $repository->findAll();
         // replace this example code with whatever you need
         return $this->render('default/allHero.html.twig',
