@@ -3,7 +3,7 @@
 //il namespace deve combaciare con la struttura delle cartelle
 namespace AppBundle\Controller;
 
-use AppBundle\Form\SuperheroFrom;
+use AppBundle\Form\SuperheroForm;
 use AppBundle\Model\HeroList;
 use AppBundle\Model\Superhero;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -61,7 +61,7 @@ class SuperheroController extends Controller
 
         $superhero = new Superhero();
 
-        $form = $this->createForm(SuperheroFrom::class, $superhero);
+        $form = $this->createForm(SuperheroForm::class, $superhero);
 
         //gestisce la richiesta di POST che di solito nei GET e vuota perche richiede una pagina non modifica i dati
         $form->handleRequest($request);
@@ -86,6 +86,47 @@ class SuperheroController extends Controller
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/edit/{id}", name="edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, $id){
+        $repository = $this->getDoctrine()->getRepository(Superhero::class);
+        $superhero = $repository->find($id);
+
+        $form = $this->createForm(SuperheroForm::class, $superhero);
+        $form->handleRequest($request);
+
+        if($form->isValid() && $form->isSubmitted()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($superhero);
+            $entityManager->flush();
+            return $this->redirectToRoute('edit', ['id' => $superhero->getId()]);
+        }
+
+        return $this->render(
+            'default/edit.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("delete/{id}", name="delete")
+     */
+    public function deleteAction($id){
+        $repository = $this->getDoctrine()->getRepository(Superhero::class);
+        $superhero = $repository->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($superhero);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('homepage');
     }
 
     /**

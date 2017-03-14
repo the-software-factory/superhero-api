@@ -18,7 +18,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SuperheroFrom extends AbstractType //estende questa classe per avere gia i tipi
+class SuperheroForm extends AbstractType //estende questa classe per avere gia i tipi
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
