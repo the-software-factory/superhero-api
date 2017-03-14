@@ -1,23 +1,30 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">{{ superhero.name }}</div>
+    <div class="container">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">{{ superhero.name }}</div>
 
-        <!-- List group -->
-        <ul class="list-group">
-            <li class="list-group-item">Real Name: {{ superhero.realName }}</li>
-            <li class="list-group-item">Place: {{ superhero.location }}</li>
-            <li class="list-group-item">Has cloak?
-                {% if superhero.hasCloak %}
-                    <span class="glyphicon glyphicon-ok"></span>
-                {% else %}
-                    <span class="glyphicon glyphicon-remove"></span>
-                {% endif %}
-            </li>
-            <li class="list-group-item">Birthdate: {{ superhero.birthDate | date}}</li>
-        </ul>
+            <!-- List group -->
+            <ul class="list-group">
+                <li class="list-group-item">Real Name: {{ superhero.realName }}</li>
+                <li class="list-group-item">Place: {{ superhero.location }}</li>
+                <li class="list-group-item">Has cloak?
+                    {% if superhero.hasCloak %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
+                </li>
+                <li class="list-group-item">Birthdate: {{ superhero.birthDate | date}}</li>
+            </ul>
+        </div>
+        <div class="picture">
+                <img src="{{ superhero.picture }}" alt="Superhero picture" />
+            <a href="{{ path('edit', {'id' : superhero.id}) }}" class="glyphicon glyphicon-pencil"></a>
+            <a href="{{ path('delete', {'id' : superhero.id}) }}" class="glyphicon glyphicon-trash"></a>
+        </div>
     </div>
 {% endblock %}
 

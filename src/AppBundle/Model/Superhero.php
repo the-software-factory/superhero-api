@@ -26,6 +26,40 @@ class Superhero
     // cosi siamo sicuri
     //che nessuno lo possa cambiare ma cosi solo doctrine lo puo cambiare
     private $id;
+    /**
+     * @ORM\Column(name="name", type="string")
+     * @var string
+     * @Assert\NotBlank(message="Name is required")
+     */
+    private $name;
+    /**
+     * @ORM\Column(name="real_name", type="string")
+     * @var $string
+     * @Assert\NotBlank(message="Real Name is required")
+     */
+    private $realName;
+    /**
+     * @ORM\Column(name="location", type="string")
+     * @var string
+     * @Assert\NotBlank(message="Location is required")
+     */
+    private $location;
+    /**
+     * @ORM\Column(name="has_cloak", type="boolean")
+     * @var boolean
+     *
+     */
+    private $hasCloak = false;
+    /**
+     * @ORM\Column(name="birth_date", type="datetime")
+     * @var \DateTime
+     * @Assert\NotBlank(message="Birth Date in required")
+     */
+    private $birthDate;
+    /**
+     * @ORM\Column(name="picture", type="string")
+     */
+    private $picture;
 
     /**
      * @return int
@@ -36,39 +70,20 @@ class Superhero
     }
 
     /**
-     * @ORM\Column(name="name", type="string")
-     * @var string
-     * @Assert\NotBlank(message="Name is required")
+     * @return string
      */
-    private $name;
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
 
     /**
-     * @ORM\Column(name="real_name", type="string")
-     * @var $string
-     * @Assert\NotBlank(message="Real Name is required")
+     * @param string $picture
      */
-    private $realName;
-
-    /**
-     * @ORM\Column(name="location", type="string")
-     * @var string
-     * @Assert\NotBlank(message="Location is required")
-     */
-    private $location;
-
-    /**
-     * @ORM\Column(name="has_cloak", type="boolean")
-     * @var boolean
-     *
-     */
-    private $hasCloak = false;
-
-    /**
-     * @ORM\Column(name="birth_date", type="datetime")
-     * @var \DateTime
-     * @Assert\NotBlank(message="Birth Date in required")
-     */
-    private $birthDate;
+    public function setPicture(string $picture)
+    {
+        $this->picture = $picture;
+    }
 
     /**
      * @return string
@@ -76,6 +91,14 @@ class Superhero
     public function getRealName(): ?string
     {
         return $this->realName;
+    }
+
+    /**
+     * @param string $realName
+     */
+    public function setRealName($realName)
+    {
+        $this->realName = $realName;
     }
 
     /**
@@ -92,14 +115,6 @@ class Superhero
     public function setName(string $name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @param mixed $realName
-     */
-    public function setRealName($realName)
-    {
-        $this->realName = $realName;
     }
 
     /**

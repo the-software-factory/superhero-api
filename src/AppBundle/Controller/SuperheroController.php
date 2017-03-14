@@ -104,7 +104,7 @@ class SuperheroController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($superhero);
             $entityManager->flush();
-            return $this->redirectToRoute('edit', ['id' => $superhero->getId()]);
+            return $this->redirectToRoute('detail', ['id' => $superhero->getId()]);
         }
 
         return $this->render(
