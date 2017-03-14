@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SuperheroController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/all", name="allHero")
      */
     public function indexAction(Request $request)
     {
@@ -23,7 +23,7 @@ class SuperheroController extends Controller
 
         // replace this example code with whatever you need
         return $this->render(
-            'default/index.html.twig',
+            'default/allHero.html.twig',
             [
                 'superheroes' => $superheroes,
             ]
@@ -56,7 +56,7 @@ class SuperheroController extends Controller
         $superhero->setName('Superman');
         $superhero->setRealName('Clark Kent');
         $superhero->setLocation('Metropolis');
-        $superhero->setHasCloak('true');
+        $superhero->setHasCloak(true);
         $superhero->setBirthDate(new \DateTime('04/25/1975'));
 
         $entityManager = $this->getDoctrine()->getManager();

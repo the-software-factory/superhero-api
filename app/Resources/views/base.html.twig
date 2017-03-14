@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Superheroes{% endblock %}</title>
+        <title>{% block title %}Superhero{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         {% endblock %}
@@ -10,6 +10,7 @@
     </head>
     <body>
         {% block body %}{% endblock %}
+            <link rel="script" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/core.js"/>
             <link rel="script" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
         {% block javascripts %}{% endblock %}
     </body>
