@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Superheroes
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {%  for superhero in superheroes %}
+            <div class="col-sm-6 col-md-4">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><h4>{{ superhero.name }}</h4></div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>Real Name: {{ superhero.realName }}</li>
+                            <li>Location: {{ superhero.location }}</li>
+                            <li>Ha il mantello?
+                                {% if superhero.hasCloak %}
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                {% endif %}
+                            </li>
+                            <li>Data di nascita: {{ superhero.birthDate | date("d/M/Y") }}</li>
+                        </ul>
+                        <a href="{{ path('detail',{'id':superhero.id}) }}">Vedi scheda...</a>
+                    </div>
+                </div>
+
+
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    h4 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+
+
+    }
+</style
+{% endblock %}
+
+{% block javascripts %}
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+{% endblock %}

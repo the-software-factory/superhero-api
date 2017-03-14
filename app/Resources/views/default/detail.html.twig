@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Superhero Detail
+{% endblock %}
+
 {% block body %}
-    <ul>
-        <li>Nome: {{ superhero.name }}</li>
-        <li>Nome reale: {{ superhero.realName }}</li>
-        <li>Luogo: {{ superhero.location }}</li>
-        <li>Ha il mantello? {{ superhero.hasCloak }}</li>
-        <li>Data di nascita: {{ superhero.birthDate | date }}</li>
+    <h2>{{ superhero.name }}</h2>
+    <ul class="list-group">
+        <li class="list-group-item">Nome reale: {{ superhero.realName }}</li>
+        <li class="list-group-item">Luogo: {{ superhero.location }}</li>
+        <li class="list-group-item">Ha il mantello? {{ superhero.hasCloak ? 'si' : 'no' }}</li>
+        <li class="list-group-item">Data di nascita: {{ superhero.birthDate | date("d/M/Y") }}</li>
     </ul>
 
 {% endblock %}

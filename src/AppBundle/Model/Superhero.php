@@ -1,50 +1,77 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace AppBundle\Model;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Created by PhpStorm.
  * User: lorenzo
  * Date: 10/03/17
  * Time: 12.31
+ *
+ * @ORM\Entity()
  */
 class Superhero
 {
     /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(name="name", type="string")
      * @var string
      */
     private $name;
 
     /**
-     * @return string
-     */
-
-    /**
+     * @ORM\Column(name="real_name", type="string")
      * @var string
      */
     private $realName;
 
     /**
+     * @ORM\Column(name="location", type="string")
      * @var string
      */
     private $location;
 
     /**
+     * @ORM\Column(name="has_cloak", type="boolean")
      * @var bool
      */
     private $hasCloak;
 
     /**
+     * @ORM\Column(name="birth_date", type="datetime")
      * @var \DateTime
      */
     private $birthDate;
 
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     */
     public function setName(string $name): void
     {
         if (strlen($name) == 0) {
@@ -53,6 +80,9 @@ class Superhero
         $this->name = $name;
     }
 
+    /**
+     * @return string
+     */
     public function getRealName(): string
     {
         return $this->realName;

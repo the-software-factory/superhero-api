@@ -19,32 +19,71 @@ class SuperheroController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $repository = $this->getDoctrine()->getRepository(SuperHero::class);
+
+        $superheroes = $repository->findAll();
+
         // replace this example code with whatever you need
         return $this->render(
             'default/index.html.twig',
             [
-                'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+                'superheroes' => $superheroes,
             ]
         );
     }
 
     /**
-     * @Route("/detail", name="detail")
+     * @Route("/detail/{id}", name="detail")
      */
-    public function detailAction(Request $request)
+    public function detailAction($id)
     {
-        $superhero = new Superhero();
+        $repository = $this->getDoctrine()->getRepository(SuperHero::class);
 
-        $superhero->setName('Superman');
-        $superhero->setRealName('Clark Kent');
-        $superhero->setLocation('Metropolis');
-        $superhero->setHasCloak(true);
-        $superhero->setBirthDate(new \DateTime('04/25/1975'));
+        $superhero = $repository->find($id);
 
         return $this->render(
           'default/detail.html.twig',
             [
                 'superhero' => $superhero,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/create", name="create")
+     * @param Request $request
+     * @return Route
+     */
+    public function createAction(Request $request)
+    {
+        $superhero = new Superhero();
+        $superhero->setName('Superman');
+        $superhero->setRealName('Clark Kent');
+        $superhero->setLocation('Metropolis');
+        $superhero->setHasCloak(false);
+        $superhero->setBirthDate(new \DateTime('11/12/1968'));
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($superhero);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('detail', [ 'id' => $superhero->getId() ]);
+    }
+
+    /**
+     * @Route("/all", name="allHeroes")
+     */
+    public function allHeroesAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(SuperHero::class);
+
+        $superheroes = $repository->findAll();
+
+        // replace this example code with whatever you need
+        return $this->render(
+            'default/allHeroes.html.twig',
+            [
+                'superheroes' => $superheroes,
             ]
         );
     }
