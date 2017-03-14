@@ -2,18 +2,20 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\SuperheroForm;
 use AppBundle\Model\Superhero;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/superhero")
+ * @Route("superhero")
  */
 class SuperheroController extends Controller
 {
     /**
-     * @Route("/all", name="allHero")
+     * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
     {
@@ -21,9 +23,8 @@ class SuperheroController extends Controller
 
         $superheroes = $repository->findAll();
 
-        // replace this example code with whatever you need
         return $this->render(
-            'default/allHero.html.twig',
+            'default/index.html.twig',
             [
                 'superheroes' => $superheroes,
             ]
@@ -49,20 +50,41 @@ class SuperheroController extends Controller
 
     /**
      * @Route("/create", name="create")
+     * @Method({"GET", "POST"})
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $superhero = new Superhero();
-        $superhero->setName('Superman');
-        $superhero->setRealName('Clark Kent');
-        $superhero->setLocation('Metropolis');
-        $superhero->setHasCloak(true);
-        $superhero->setBirthDate(new \DateTime('04/25/1975'));
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($superhero);
-        $entityManager->flush();
+        $form = $this->createForm(SuperheroForm::class, $superhero);
 
-        return $this->redirectToRoute('detail', ['id' => $superhero->getId()]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($superhero);
+            $entityManager->flush();
+            return $this->redirectToRoute('detail', [ 'id' => $superhero->getId() ]);
+        }
+
+        return $this->render(
+            'default/create.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/allHero", name="allHero")
+     */
+    public function allHeroAction(Request $request)
+    {
+        $repository=$this->getDoctrine()->getRepository(Superhero::class);
+        $superheroes = $repository->findAll();
+        // replace this example code with whatever you need
+        return $this->render('default/allHero.html.twig',
+            [
+                'superheroes' => $superheroes
+            ]);
     }
 }

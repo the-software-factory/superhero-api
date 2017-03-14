@@ -17,26 +17,31 @@ class Superhero
      * @var int
      */
     private $id;
+
     /**
      * @ORM\Column(name="name", type="string")
      * @var string
      */
     private $name;
+
     /**
      * @ORM\Column(name="real_name", type="string")
      * @var string
      */
     private $realName;
+
     /**
      * @ORM\Column(name="location", type="string")
      * @var string
      */
     private $location;
+
     /**
      * @ORM\Column(name="has_cloak", type="boolean")
      * @var bool
      */
     private $hasCloak;
+
     /**
      * @ORM\Column(name="birth_date", type="datetime")
      * @var \DateTime
@@ -44,25 +49,11 @@ class Superhero
     private $birthDate;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name) : void
-    {
-        if (strlen($name) == 0) {
-            throw new \InvalidArgumentException('Superheroname cannot be empty');
-        }
-
-        $this->name = $name;
     }
 
     /**
@@ -100,7 +91,7 @@ class Superhero
     /**
      * @return bool
      */
-    public function isHasCloak(): bool
+    public function hasCloak(): bool
     {
         return $this->hasCloak;
     }
@@ -129,5 +120,17 @@ class Superhero
         $this->birthDate = $birthDate;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
+    public function setName(string $name): void
+    {
+        if (strlen($name) == 0) {
+            throw new \InvalidArgumentException('Superhero name cannot be empty.');
+        }
+
+        $this->name = $name;
+    }
 }
