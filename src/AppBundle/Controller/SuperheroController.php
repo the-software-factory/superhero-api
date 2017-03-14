@@ -3,13 +3,12 @@
 //il namespace deve combaciare con la struttura delle cartelle
 namespace AppBundle\Controller;
 
+use AppBundle\Form\SuperheroFrom;
 use AppBundle\Model\HeroList;
 use AppBundle\Model\Superhero;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
 
 //rotta di base, cioe tutte le altre devono avere questa prima
@@ -51,8 +50,10 @@ class SuperheroController extends Controller
         );
     }
 
+    //Method dice quali metodi deve supportare la funzione
     /**
      * @Route("/create", name="create")
+     * @Method({"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -60,17 +61,31 @@ class SuperheroController extends Controller
 
         $superhero = new Superhero();
 
-        $superhero->setName('Superman');
-        $superhero->setRealName('Clark Kent');
-        $superhero->setLocation('Metropolis');
-        $superhero->setHasCloak(false);
-        $superhero->setBirthDate(new \DateTime('04/25/1975'));
+        $form = $this->createForm(SuperheroFrom::class, $superhero);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($superhero);
-        $entityManager->flush();
+        //gestisce la richiesta di POST che di solito nei GET e vuota perche richiede una pagina non modifica i dati
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('detail', ['id' => $superhero->getId()]);
+        // vale true solo quando la richiesta sopra e una POST e serve a evitare che uno crei qualcosa facendo un refresh ad esempio
+        if($form->isSubmitted() && $form->isValid()){
+            //ora superhro contiene tutti i dati passati nel form tramite hendleRequest
+            //assumo che il form sia valido
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($superhero);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('detail', ['id' => $superhero->getId()]);
+        }
+        //una volta finito di inserire nel form l'utente di solito va rediretto verso un'altra destinazione cosi ha capito che ha funzionato
+
+        //ora va gestita la visualizzazione del form
+        //lo visualizza quando mando il GET la prima volta
+        return $this->render(
+            'default/create.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -89,6 +104,5 @@ class SuperheroController extends Controller
             ]
         );
     }
-
 
 }
