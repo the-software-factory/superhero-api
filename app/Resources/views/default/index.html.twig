@@ -4,6 +4,7 @@
         <div class="container">
                 <div class="row">
                         <h1>The Greatest Superhero App</h1>
+                        <div class="row"><a class="btn btn-primary" href="{{path('create')}}">New Hero</a></div>
                 </div>
                 <div class="row">
                         <table class="table table-striped">
@@ -37,5 +38,10 @@
 {% endblock %}
 
 {% block stylesheets %}
+    <style>
+            .btn.btn-primary {
+                float: right;
+            }
+    </style>
 
 {% endblock %}
