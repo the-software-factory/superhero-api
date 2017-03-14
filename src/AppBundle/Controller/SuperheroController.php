@@ -9,6 +9,8 @@ use AppBundle\Model\Superhero;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\HttpFoundation\Request;
 
 //rotta di base, cioe tutte le altre devono avere questa prima
