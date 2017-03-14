@@ -2,10 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\SuperHeroForm;
 use AppBundle\Model\Superhero;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * @Route("superhero")
@@ -45,22 +47,34 @@ class SuperheroController extends Controller
 
     /**
      * @Route("/create", name="create")
+     * @Method({"GET","POST"})
      */
     public function createAction(Request $request){
 
 
         $superhero = new Superhero();
-        $superhero->setName('Superman');
-        $superhero->setRealName('Clark Kent');
-        $superhero->setLocation('Metropolis');
-        $superhero->setHasCloak(false);
-        $superhero->setBirthDate(new \DateTime('04/25/1979'));
+        $form = $this->createForm(SuperHeroForm::class,$superhero);
+        $form->handleRequest($request);
 
-        $entityManager=$this->getDoctrine()->getManager();
-        $entityManager->persist($superhero);
-        $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager=$this->getDoctrine()->getManager();
+            $entityManager->persist($superhero);
+            $entityManager->flush();
 
-        return $this->redirectToRoute('detail',['id'=>$superhero->getId()]);
+            return $this->redirectToRoute('detail',['id'=>$superhero->getId()]);
+        }
+        return $this->render(
+            'default/create.html.twig',
+            [
+                'form' => $form->createView(),
+
+            ]
+        );
+
+
+
+
+
 
     }
 
