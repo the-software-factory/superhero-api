@@ -25,10 +25,9 @@
                                                 <td>{{superhero.name}}</td>
                                                 <td>{{superhero.realName}}</td>
                                                 <td>
-                                                        <a href="{{path('detail',{'id':superhero.id})}}"><span class="glyphicon glyphicon-eye-open"></span> </a>
-                                                        <a href=""><span class="glyphicon glyphicon-pencil"></span> </a>
-                                                        <a href=""><span class="glyphicon glyphicon-trash"></span> </a>
-
+                                                        <a href="{{path('detail', {'id':superhero.id})}}"><span class="glyphicon glyphicon-eye-open"></span> </a>
+                                                        <a href="{{path('edit', {'id':superhero.id})}}"><span class="glyphicon glyphicon-pencil"></span> </a>
+                                                        <a href="{{path('delete', {'id':superhero.id})}}"><span class="glyphicon glyphicon-trash"></span> </a>
                                                 </td>
                                         </tr>
                                 {%endfor%}
