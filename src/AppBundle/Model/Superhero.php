@@ -3,32 +3,58 @@ declare(strict_types=1);
 
 namespace AppBundle\Model;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ */
 class Superhero
 {
     /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(name="name", type="string")
      * @var string
      */
     private $name;
 
     /**
+     * @ORM\Column(name="real_name", type="string")
      * @var string
      */
     private $realName;
 
     /**
+     * @ORM\Column(name="location", type="string")
      * @var string
      */
     private $location;
 
     /**
+     * @ORM\Column(name="has_cloak", type="boolean")
      * @var bool
      */
     private $hasCloak;
 
     /**
+     * @ORM\Column(name="birth_date", type="datetime")
      * @var \DateTime
      */
     private $birthDate;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @return string
