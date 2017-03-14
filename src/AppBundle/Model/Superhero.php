@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AppBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -20,30 +21,35 @@ class Superhero
 
     /**
      * @ORM\Column(name="name", type="string")
+     * @Assert\NotBlank(message="Name is required")
      * @var string
      */
     private $name;
 
     /**
      * @ORM\Column(name="real_name", type="string")
+     * @Assert\NotBlank
      * @var string
      */
     private $realName;
 
     /**
      * @ORM\Column(name="location", type="string")
+     * @Assert\NotBlank
      * @var string
      */
     private $location;
 
     /**
      * @ORM\Column(name="has_cloak", type="boolean")
+     * @Assert\NotNull
      * @var bool
      */
-    private $hasCloak;
+    private $hasCloak = false;
 
     /**
      * @ORM\Column(name="birth_date", type="datetime")
+     * @Assert\NotNull
      * @var \DateTime
      */
     private $birthDate;
@@ -59,7 +65,7 @@ class Superhero
     /**
      * @return string
      */
-    public function getRealName(): string
+    public function getRealName(): ?string
     {
         return $this->realName;
     }
@@ -75,7 +81,7 @@ class Superhero
     /**
      * @return string
      */
-    public function getLocation(): string
+    public function getLocation(): ?string
     {
         return $this->location;
     }
@@ -107,7 +113,7 @@ class Superhero
     /**
      * @return \DateTime
      */
-    public function getBirthDate(): \DateTime
+    public function getBirthDate(): ?\DateTime
     {
         return $this->birthDate;
     }
@@ -115,12 +121,12 @@ class Superhero
     /**
      * @param \DateTime $birthDate
      */
-    public function setBirthDate(\DateTime $birthDate)
+    public function setBirthDate(?\DateTime $birthDate)
     {
         $this->birthDate = $birthDate;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
