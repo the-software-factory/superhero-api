@@ -76,6 +76,47 @@ class SuperheroController extends Controller
     }
 
     /**
+     * @Route("/edit/{id}", name="edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository(Superhero::class);
+
+        $superhero = $repository->find($id);
+
+        $form = $this->createForm(SuperheroForm::class, $superhero);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('detail', [ 'id' => $superhero->getId() ]);
+        }
+
+        return $this->render(
+            'default/edit.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete")
+     */
+    public function deleteAction($id)
+    {
+        $repository = $this->getDoctrine()->getRepository(Superhero::class);
+
+        $superhero = $repository->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($superhero);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
      * @Route("/allHero", name="allHero")
      */
     public function allHeroAction(Request $request)
