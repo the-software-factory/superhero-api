@@ -21,7 +21,7 @@ class Superhero
 
     /**
      * @ORM\Column(name="name", type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Name is required")
      * @var string
      */
     private $name;
@@ -121,7 +121,7 @@ class Superhero
     /**
      * @param \DateTime $birthDate
      */
-    public function setBirthDate(\DateTime $birthDate)
+    public function setBirthDate(?\DateTime $birthDate)
     {
         $this->birthDate = $birthDate;
     }

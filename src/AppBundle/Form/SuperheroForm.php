@@ -4,8 +4,8 @@ namespace AppBundle\Form;
 
 use AppBundle\Model\Superhero;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,10 +26,16 @@ class SuperheroForm extends AbstractType
             TextType::class
         )->add(
             'hasCloak',
-            CheckboxType::class
+            CheckboxType::class,
+            [
+                'label' => 'Cloak',
+            ]
         )->add(
             'birthDate',
-            DateType::class
+            BirthdayType::class,
+            [
+                'placeholder' => 'select one',
+            ]
         )->add(
             'submit',
             SubmitType::class
