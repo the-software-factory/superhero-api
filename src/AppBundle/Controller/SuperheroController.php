@@ -64,4 +64,18 @@ class SuperheroController extends Controller
 
         return $this->redirectToRoute('detail', [ 'id' => $superhero->getId() ]);
     }
+
+    /**
+     * @Route("/allHero", name="allHero")
+     */
+    public function allHeroAction(Request $request)
+    {
+        $repository=$this->getDoctrine()->getRepository(Superhero::class);
+        $superheroes = $repository->findAll();
+        // replace this example code with whatever you need
+        return $this->render('default/allHero.html.twig',
+            [
+                'superheroes' => $superheroes
+            ]);
+    }
 }
