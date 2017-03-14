@@ -4,6 +4,8 @@ namespace AppBundle\Controller;         //DEVE COMBACIARE CON QUELLO SOTTO src
 
 use AppBundle\Model\Superevil;
 use AppBundle\Model\Superhero;
+use AppBundle\Form\SuperheroForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,7 +51,8 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
      * @Route("/detail/{id}", name="detail")
      */
 
-    public function detailAction(Request $request, $id){
+    public function detailAction(Request $request, $id)
+    {
 
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superhero = $repository->find($id);
@@ -57,7 +60,7 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
         return $this->render(
             'default/detail.html.twig',         //non abbiamo il template, lo andiamo a creare all'interno di default
             [
-                'superhero'=>$superhero,
+                'superhero' => $superhero,
             ]
         );
     }
@@ -65,8 +68,39 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
 
     /**
      * @Route("/create", name="create")
+     * @Method({"GET", "POST"})
      */
-    public function createAction(Request $request){
+    public function createAction(Request $request)
+    {
+        $superhero = new Superhero();
+
+        $form = $this->createForm(SuperheroForm::class, $superhero);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {         //controllo che il form sia spedito e sia valido
+            $entityManager = $this->getDoctrine()->getManager();     //per salvare il mio supereroe nel db
+            $entityManager->persist($superhero);
+            $entityManager->flush();
+            return $this->redirectToRoute('detail', ['id' => $superhero->getId()]);        //se la post è valida, il browser mi porta qua
+        }
+
+        return $this->render(
+            'default/create.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+
+
+
+
+    /*
+     * @Route("/create", name="create")
+     */
+    /*
+     * public function createAction(Request $request){
         $superhero= new Superhero();
         $superhero->setName('Batman');       //INCAPSULAMENTO , RICHIAMO FUNZIONE PER SCRIVERE VARIABILE PRIVATA
         $superhero->setRealName('Clark Kent');
@@ -80,28 +114,74 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
 
         return $this->redirectToRoute('detail', ['id' => $superhero->getId() ]);
 
+    }               CREAZIONE A MANO DEI SUPEREROI
+*/
+
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, $id)
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Superhero::class);
+        $superhero = $repository->find($id);
+
+        $form = $this->createForm(SuperheroForm::class, $superhero);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();     //per salvare il mio supereroe nel db
+           // $entityManager->persist($superhero);      NON SERVE
+            $entityManager->flush();
+            return $this->redirectToRoute('detail', ['id' => $superhero->getId()]);
+        }
+
+        return $this->render(
+            'default/edit.html.twig',         //non abbiamo il template, lo andiamo a creare all'interno di default
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
 
 
     /**
+     * @Route("/delete/{id}", name="delete")
+     * @Method({"GET", "POST"})
+     */
+    public function deleteAction($id){
+        $repository = $this->getDoctrine()->getRepository(Superhero::class);
+        $superhero = $repository->find($id);
+        $entityManager=$this->getDoctrine()->getManager();
+        $entityManager->remove($superhero);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    
+    
+    
+    /**
      * @Route("superhero/evil", name="evil")
      */
-    
+
     public function evilAction(Request $request)
     {
-        $superevil=new Superevil('Miami');
+        $superevil = new Superevil('Miami');
         $superevil->setName('Joker');
         $superevil->setPower('Fire');
         $superevil->setRealName('Marco');
-        
-        $superevil2= new Superevil('Gualdo');
+
+        $superevil2 = new Superevil('Gualdo');
         $superevil2->setName('Stregone');
         $superevil2->setRealName('Luca');
-        
+
         return $this->render('default/evil.html.twig', [
             'evil' => $superevil,
-            'evil2'=> $superevil2,
+            'evil2' => $superevil2,
         ]);
     }
 }

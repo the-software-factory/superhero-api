@@ -2,7 +2,8 @@
 declare(strict_types=1);
 
 namespace AppBundle\Model;
-use Doctrine\ORM\Mapping as ORM;                //aggiunto da me//
+use Doctrine\ORM\Mapping as ORM;                //aggiunto da me
+use Symfony\Component\Validator\Constraints as Assert;       //aggiunto da me
 
 /**
  * Created by PhpStorm.
@@ -33,7 +34,7 @@ class Superhero
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -41,6 +42,7 @@ class Superhero
 
     /**
      * @ORM\Column(name="name", type="string")
+     * @Assert\NotBlank(message="Name is required")
      * @var string
      */
     private $name;
@@ -48,6 +50,7 @@ class Superhero
 
     /**
      * @ORM\Column(name="real_name", type="string")
+     * @Assert\NotBlank
      * @var string
      */
     private $realName;
@@ -55,6 +58,7 @@ class Superhero
 
     /**
      * @ORM\Column(name="location", type="string")
+     * @Assert\NotBlank
      * @var string
      */
     private $location;
@@ -62,6 +66,7 @@ class Superhero
 
     /**
      * @ORM\Column(name="has_cloak", type="boolean")
+     * @Assert\NotNull     *
      * @var bool
      */
     private $hasCloak;
@@ -69,13 +74,14 @@ class Superhero
 
     /**
      * @ORM\Column(name="birth_date", type="datetime")
+     * @Assert\NotNull
      * @var datetime
      */
     private $birthDate;
 
 
 
-    public function getLocation()
+    public function getLocation(): ?string
     {
         return $this->location;
     }
@@ -91,7 +97,7 @@ class Superhero
     /**
      * @return mixed
      */
-    public function getRealName()
+    public function getRealName(): ?string
     {
         return $this->realName;
     }
@@ -107,7 +113,7 @@ class Superhero
     /**
      * @return mixed
      */
-    public function getHasCloak()
+    public function getHasCloak(): ?bool
     {
         return $this->hasCloak;
     }
@@ -123,7 +129,7 @@ class Superhero
     /**
      * @return mixed
      */
-    public function getBirthDate()
+    public function getBirthDate(): ?\DateTime
     {
         return $this->birthDate;
     }
@@ -136,7 +142,7 @@ class Superhero
         $this->birthDate = $birthDate;
     }
     
-    public function getName(): string
+    public function getName(): ?string          //con ? va bene sia stinga che null
     {
         return $this->name;
             }
