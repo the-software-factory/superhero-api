@@ -4,22 +4,28 @@
 <div class="container">
 <div class="row">
     {%for superhero in superheros%}
-    <div class="col-md-4 col-sm-6">
+    <div class="col-md-6 col-sm-6">
         <div class="panel panel-info">
             <div class="panel-heading"> <h2>{{superhero.name}}</h2></div>
             <div class="panel-body">
-                <ul>
-                    <li>Nome Reale: {{superhero.realName}}</li>
-                    <li>Luogo: {{superhero.location}}</li>
-                    <li>Ha il Mantello?
-                        {% if superhero.hasCloak %}
-                            <span class="glyphicon glyphicon-ok"></span>
-                        {%else%}
-                            <span class="glyphicon glyphicon-remove"></span>
-                        {%endif%}
-                    </li>
-                    <li>Data di nascita: {{superhero.birthDate|date("d/m/Y")}}</li>
-                </ul>
+
+                    <div class="col-md-6">
+                        <img src="{{superhero.avatar}}" alt="" height="150px" width="150px">
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Nome Reale: {{superhero.realName}}</li>
+                            <li>Luogo: {{superhero.location}}</li>
+                            <li>Ha il Mantello?
+                                {% if superhero.hasCloak %}
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                {%else%}
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                {%endif%}
+                            </li>
+                            <li>Data di nascita: {{superhero.birthDate|date("d/m/Y")}}</li>
+                        </ul>
+                    </div>
 
                 <a href="{{path('detail',{'id':superhero.id})}}"> Vedi Scheda...</a>
             </div>

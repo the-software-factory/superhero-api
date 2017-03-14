@@ -11,6 +11,7 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>Avatar</th>
                 <th>Hero</th>
                 <th>Real Name</th>
                 <th>Action</th>
@@ -20,12 +21,14 @@
             {%for superhero in superheros%}
             <tr>
                 <td>{{superhero.id}}</td>
+                <td><img src="{{superhero.avatar}}" alt="" class="img-circle" width="40px" height="40px"></td>
                 <td>{{superhero.name}}</td>
                 <td>{{superhero.realName}}</td>
                 <td>
-                    <a href="{{path('detail',{'id':superhero.id})}}"><span class="glyphicon glyphicon-eye-open"></span> </a>
-                    <a href=""><span class="glyphicon glyphicon-pencil"></span> </a>
-                    <a href=""><span class="glyphicon glyphicon-trash"></span> </a>
+                    <a href="{{path('detail',{'id':superhero.id})}}"><span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a href="{{path('edit',{'id':superhero.id})}}"><span class="glyphicon glyphicon-pencil"></span> </a>
+                    <a href="{{path('delete',{'id':superhero.id})}}"><span class="glyphicon glyphicon-trash"></span> </a>
 
                 </td>
             </tr>
