@@ -1,10 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-   <ul>Nome: {{ superhero.name }}</ul>
-   <ul>Nome reale: {{ superhero.realName }}</ul>
-   <ul>Luogo: {{ superhero.location }}</ul>
-   <ul>Ha il mantello? {{ superhero.hasCloak }}</ul>
-   <ul>Data di nascita: {{ superhero.birthDate }}</ul>
+    <table class="table">
+        <th><span class="label label-default">Nome</span></th>
+        <th><span class="label label-primary">Nome Reale</span></th>
+        <th><span class="label label-success">Città</span></th>
+        <th><span class="label label-info">Mantello</span></th>
+        <th><span class="label label-danger">Data di Nascita</span></th>
+        <tr>
+            <td><span class="label label-default">{{ superhero.name }}</span></td>
+            <td><span class="label label-primary">{{ superhero.realName }}</span></td>
+            <td><span class="label label-success">{{ superhero.location }}</span></td>
+            <td><span class="label label-info">    {% if (superhero.hasCloak) %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                                        {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}</span></td>
+            <td><span class="label label-danger"> {{ superhero.birthDate|date("d/m/Y") }}</span></td>
+        </tr>
+    </table>
 {% endblock %}
 
+
+ {% block stylesheets %}
+     <style>
+         h1 {
+             margin-left: 20px;
+             font-family: 'Baloo Bhaina', cursive;
+             font-size: 20px;
+         }
+         
+         .table {
+             width: 100%;
+             align-items: center;
+         }
+         
+         th{
+             font-size: 40px;
+         }
+
+         td{
+             font-size: 25px;
+         }
+     </style>
+ {% endblock %}

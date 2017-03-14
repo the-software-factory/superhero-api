@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace AppBundle\Model;
+use Doctrine\ORM\Mapping as ORM;                //aggiunto da me//
 
 /**
  * Created by PhpStorm.
@@ -9,17 +10,71 @@ namespace AppBundle\Model;
  * Date: 10/03/17
  * Time: 12.31
  */
+
+/**
+ * @ORM\Entity()
+ */
+
+
 class Superhero
 {
-    private $name;
-    private $realName;
-    private $location;
-    private $hasCloak;
-    private $birthDate;    
 
     /**
-     * @return mixed
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
+    private $id;
+
+
+    # il setter non server perche doctrine riesce da solo a valorizzarlo
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    /**
+     * @ORM\Column(name="name", type="string")
+     * @var string
+     */
+    private $name;
+
+
+    /**
+     * @ORM\Column(name="real_name", type="string")
+     * @var string
+     */
+    private $realName;
+
+
+    /**
+     * @ORM\Column(name="location", type="string")
+     * @var string
+     */
+    private $location;
+
+
+    /**
+     * @ORM\Column(name="has_cloak", type="boolean")
+     * @var bool
+     */
+    private $hasCloak;
+
+
+    /**
+     * @ORM\Column(name="birth_date", type="datetime")
+     * @var datetime
+     */
+    private $birthDate;
+
+
+
     public function getLocation()
     {
         return $this->location;
@@ -27,7 +82,7 @@ class Superhero
 
     /**
      * @param mixed $location
-     */
+     *      */
     public function setLocation($location)
     {
         $this->location = $location;
