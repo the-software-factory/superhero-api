@@ -2,10 +2,24 @@
 # http://symfony.com/doc/current/security.html
 security:
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    admin:
+                        password: $2y$12$nzd8AIcERoz0aazmyXGOA.6gFnv5054xY9Q7pHvwRER/e2PZsnmXi
+                        roles: 'ROLE_ADMIN'
+                    user:
+                        password: $2y$12$g7HLnkBvj7s8/SMl9rbgfOdFTRM3dQvZYI/OVAJ30ZZGRT2ILQUG6
+                        roles: 'ROLE_USER'
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,10 +29,12 @@ security:
 
         main:
             anonymous: ~
-            # activate different ways to authenticate
+            form_login:
+                login_path: login
+                check_path: login
+            logout:
+                path: logout
+                target: homepage
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+        - { path: ^/superhero, roles: [ROLE_ADMIN, ROLE_USER] }

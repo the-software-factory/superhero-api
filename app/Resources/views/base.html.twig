@@ -33,13 +33,14 @@
                 <li><a href="#">Link</a></li>
                 <li class="dropdown">
 
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><icon class="glyphicon glyphicon-user"/>Pippo<span class="caret"></span></a>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <icon class="glyphicon glyphicon-user"/>{{ app.user.username }}<span class="caret"></span>
+                        </a>
+                    {% endif %}
+
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                        <li><a href="{{ path('logout') }}">Logout</a></li>
                     </ul>
                 </li>
             </ul>

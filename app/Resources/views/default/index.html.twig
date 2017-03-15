@@ -1,47 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-        <div class="container">
-                <div class="row">
-                        <h1>The Greatest Superhero App</h1>
-                        <div class="row"><a class="btn btn-primary" href="{{path('create')}}">New Hero</a></div>
-                </div>
-                <div class="row">
-                        <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                        <th>#</th>
-                                        <th>Hero</th>
-                                        <th>Real Name</th>
-                                        <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {%for superhero in superheroes%}
-                                        <tr>
-                                                <td>{{superhero.id}}</td>
-                                                <td>{{superhero.name}}</td>
-                                                <td>{{superhero.realName}}</td>
-                                                <td>
-                                                        <a href="{{path('detail',{'id':superhero.id})}}"><span class="glyphicon glyphicon-eye-open"></span> </a>
-                                                        <a href=""><span class="glyphicon glyphicon-pencil"></span> </a>
-                                                        <a href=""><span class="glyphicon glyphicon-trash"></span> </a>
-
-                                                </td>
-                                        </tr>
-                                {%endfor%}
-                                </tbody>
-                        </table>
-
-                </div>
+    <div class="container">
+        <div class="row">
+            <h1>The Greatest Superhero App</h1>
         </div>
+        <div class="row">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-success" href="{{ path('create') }}">Create new superhero</a>
+            {% endif %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Hero</th>
+                    <th>Real Name</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for superhero in superheroes %}
+                    <tr>
+                        <td>{{ superhero.id }}</td>
+                        <td>{{ superhero.name }}</td>
+                        <td>{{ superhero.realName }}</td>
+                        <td>
+                            <a href="{{ path('detail',{'id':superhero.id}) }}"><span
+                                        class="glyphicon glyphicon-eye-open"></span> </a>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('edit', {'id': superhero.id}) }}"><span
+                                            class="glyphicon glyphicon-pencil"></span> </a>
+
+                                <a href="{{ path('delete', {'id': superhero.id}) }}"><span
+                                            class="glyphicon glyphicon-trash"></span> </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
-    <style>
-            .btn.btn-primary {
-                float: right;
-            }
-    </style>
 
 {% endblock %}
