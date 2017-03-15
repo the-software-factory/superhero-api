@@ -71,6 +71,65 @@ class TeamController extends Controller
     }
 
 
+    /**
+     * @Route("/edit/{id}", name="edit_team")
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function editAction(Request $request, $id)
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Team::class);
+        $team = $repository->find($id);
+
+        if($team===null){                                      //se non trova l'eroe
+            throw  $this->createNotFoundException();                //fa questo
+        }
+
+        $form2 = $this->createForm(TeamForm::class, $team);
+        $form2->handleRequest($request);
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();     //per salvare il mio supereroe nel db
+            // $entityManager->persist($team);      NON SERVE
+            $entityManager->flush();
+            return $this->redirectToRoute('detail_team', ['id' => $team->getId()]);
+        }
+
+        return $this->render(
+            'team/edit.html.twig',         //non abbiamo il template, lo andiamo a creare all'interno di default
+            [
+                'form2' => $form2->createView(),
+            ]
+        );
+    }
+    
+    
+    
+    
+    /**
+     * @Route("/detail/{id}", name="detail_team")
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function detailAction(Request $request, $id)
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Team::class);
+        $team = $repository->find($id);
+        if($team===null){                                      //se non trova l'eroe
+            throw  $this->createNotFoundException();                //fa questo
+        }
+
+        return $this->render(
+            'team/detail.html.twig',         //non abbiamo il template, lo andiamo a creare all'interno di default
+            [
+                'team' => $team,
+            ]
+        );
+    }
+    
+    
+    
         /**
          * @Route("/delete/{id}", name="delete_team")
          * @Method({"GET", "POST"})

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">{{ team.name }}</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <li>Nome: {{ team.name }} </li>
+                            <li>Nome reale: {{ team.hq }}</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn btn-warning" href="{{ path('edit', {'id':team.id}) }}"><span
+                    class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-info" href="{{ path('delete', {'id':team.id}) }}"><span
+                    class="glyphicon glyphicon-trash"></span></a>
+
+    </div>
+
+
+{% endblock %}
+
+
+ {% block stylesheets %}
+
+ {% endblock %}
