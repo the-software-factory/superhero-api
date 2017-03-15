@@ -6,6 +6,7 @@ use AppBundle\Form\SuperheroForm;
 use AppBundle\Model\Superhero;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,6 +17,7 @@ class SuperheroController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Request $request)
     {
@@ -33,12 +35,16 @@ class SuperheroController extends Controller
 
     /**
      * @Route("/detail/{id}", name="detail")
+     * @Security("has_role('ROLE_USER')")
      */
     public function detailAction($id)
     {
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
 
         $superhero = $repository->find($id);
+        if ($superhero === null) {
+            throw $this->createNotFoundException();
+        }
 
         return $this->render(
             'default/detail.html.twig',
@@ -51,6 +57,7 @@ class SuperheroController extends Controller
     /**
      * @Route("/create", name="create")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function createAction(Request $request)
     {
@@ -78,12 +85,16 @@ class SuperheroController extends Controller
     /**
      * @Route("/edit/{id}", name="edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $id)
     {
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
 
         $superhero = $repository->find($id);
+        if ($superhero === null) {
+            throw $this->createNotFoundException();
+        }
 
         $form = $this->createForm(SuperheroForm::class, $superhero);
         $form->handleRequest($request);
@@ -102,12 +113,16 @@ class SuperheroController extends Controller
 
     /**
      * @Route("/delete/{id}", name="delete")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction($id)
     {
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
 
         $superhero = $repository->find($id);
+        if ($superhero === null) {
+            throw $this->createNotFoundException();
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($superhero);
@@ -118,6 +133,7 @@ class SuperheroController extends Controller
 
     /**
      * @Route("/allHero", name="allHero")
+     * @Security("has_role('ROLE_USER')")
      */
     public function allHeroAction(Request $request)
     {

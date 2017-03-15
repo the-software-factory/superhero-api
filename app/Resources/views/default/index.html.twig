@@ -6,7 +6,9 @@
             <h1>The Greatest Superhero App</h1>
         </div>
         <div class="row">
-            <a class="btn btn-success" href="{{ path('create') }}">Create new superhero</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-success" href="{{ path('create') }}">Create new superhero</a>
+            {% endif %}
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -26,11 +28,13 @@
                             <a href="{{ path('detail',{'id':superhero.id}) }}"><span
                                         class="glyphicon glyphicon-eye-open"></span> </a>
 
-                            <a href="{{ path('edit', {'id': superhero.id}) }}"><span
-                                        class="glyphicon glyphicon-pencil"></span> </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('edit', {'id': superhero.id}) }}"><span
+                                            class="glyphicon glyphicon-pencil"></span> </a>
 
-                            <a href="{{ path('delete', {'id': superhero.id}) }}"><span
-                                        class="glyphicon glyphicon-trash"></span> </a>
+                                <a href="{{ path('delete', {'id': superhero.id}) }}"><span
+                                            class="glyphicon glyphicon-trash"></span> </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
