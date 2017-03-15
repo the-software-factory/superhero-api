@@ -6,6 +6,7 @@ use AppBundle\Form\SuperheroForm;
 use AppBundle\Model\Superhero;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -36,12 +37,19 @@ class SuperheroController extends Controller
 
     /**
      * @Route("/detail/{id}", name="detail")
+     * @Security("has_role('ROLE_USER')")
      */
     public function detailAction($id)
     {
         $repository = $this->getDoctrine()->getRepository(SuperHero::class);
 
         $superhero = $repository->find($id);
+
+        if ($superhero == null) {
+            // Io lancio un eccezione, il framework la gestisce in automatico
+            // creando una pagina 404
+            throw $this->createNotFoundException();
+        }
 
         return $this->render(
           'default/detail.html.twig',
@@ -54,6 +62,7 @@ class SuperheroController extends Controller
     /**
      * @Route("/create", name="create")
      * @Method({"GET","POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @return Route
      */
@@ -81,13 +90,41 @@ class SuperheroController extends Controller
                 'form'=> $form->createView(),
             ]
         );
+    }
 
+    /**
+     * @Route("/edit/{id}", name="edit")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function editAction(Request $request, $id) {
+        $repository = $this->getDoctrine()->getRepository(SuperHero::class);
+        $superhero = $repository->find($id);
 
+        if ($superhero == null) {
+            // Io lancio un eccezione, il framework la gestisce in automatico
+            // creando una pagina 404
+            throw $this->createNotFoundException();
+        }
 
+        $form = $this->createForm(SuperheroForm::class, $superhero);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('detail', [ 'id' => $superhero->getId() ]);
+        }
+
+        return $this->render(
+            'default/edit.html.twig',
+            [
+                'form'=> $form->createView(),
+            ]
+        );
     }
 
     /**
      * @Route("/all", name="allHeroes")
+     * @Method({"GET", "POST"})
      */
     public function allHeroesAction(Request $request)
     {
@@ -102,5 +139,27 @@ class SuperheroController extends Controller
                 'superheroes' => $superheroes,
             ]
         );
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function deleteAction($id)
+    {
+        $repository = $this->getDoctrine()->getRepository(SuperHero::class);
+        $superhero = $repository->find($id);
+
+        if ($superhero == null) {
+            // Io lancio un eccezione, il framework la gestisce in automatico
+            // creando una pagina 404
+            throw $this->createNotFoundException();
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($superhero);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('homepage');
     }
 }

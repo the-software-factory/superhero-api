@@ -6,15 +6,18 @@
             <h1>The Gratest Superhero App</h1>
         </div>
         <div class="row">
-            <a href="{{ path('create') }}">
-                <button class="btn-success">Create new superhero</button>
-            </a>
+            {%  if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('create') }}">
+                    <button class="btn-success">Create new superhero</button>
+                </a>
+            {% endif %}
         </div>
         <div class="row">
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Avatar</th>
                     <th>Hero</th>
                     <th>Real Name</th>
                     <th>Action</th>
@@ -24,13 +27,15 @@
                 {%for superhero in superheroes%}
                     <tr>
                         <td>{{superhero.id}}</td>
+                        <td><img src="{{ superhero.avatar }}" class="img-circle" alt="avatar" width="40px" height="40px"/> </td>
                         <td>{{superhero.name}}</td>
                         <td>{{superhero.realName}}</td>
                         <td>
-                            <a href="{{path('detail',{'id':superhero.id})}}"><span class="glyphicon glyphicon-eye-open"></span> </a>
-                            <a href=""><span class="glyphicon glyphicon-pencil"></span> </a>
-                            <a href=""><span class="glyphicon glyphicon-trash"></span> </a>
-
+                            <a href="{{ path('detail', {'id': superhero.id}) }}"><span class="glyphicon glyphicon-eye-open"></span> </a>
+                            {%  if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('edit', {'id': superhero.id}) }}"><span class="glyphicon glyphicon-pencil"></span> </a>
+                                <a href="{{ path('delete', {'id': superhero.id}) }}"><span class="glyphicon glyphicon-trash"></span> </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {%endfor%}

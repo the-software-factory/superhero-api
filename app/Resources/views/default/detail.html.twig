@@ -5,12 +5,28 @@
 {% endblock %}
 
 {% block body %}
-    <h2>{{ superhero.name }}</h2>
-    <ul class="list-group">
-        <li class="list-group-item">Nome reale: {{ superhero.realName }}</li>
-        <li class="list-group-item">Luogo: {{ superhero.location }}</li>
-        <li class="list-group-item">Ha il mantello? {{ superhero.hasCloak ? 'si' : 'no' }}</li>
-        <li class="list-group-item">Data di nascita: {{ superhero.birthDate | date("d/M/Y") }}</li>
-    </ul>
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2>{{ superhero.name }}</h2>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-4">
+                    <img src="{{ superhero.avatar }}"  alt="avatar" width="150px" />
+                </div>
+                <div class="col-sm-8">
+                    <ul class="list-group">
+                        <li class="list-group-item">Nome reale: {{ superhero.realName }}</li>
+                        <li class="list-group-item">Luogo: {{ superhero.location }}</li>
+                        <li class="list-group-item">Ha il mantello? {{ superhero.hasCloak ? 'si' : 'no' }}</li>
+                        <li class="list-group-item">Data di nascita: {{ superhero.birthDate | date("d/M/Y") }}</li>
+                    </ul>
+                </div>
+                <a href="{{ path('edit', {'id': superhero.id}) }}"><span class="glyphicon glyphicon-pencil"></span> </a>
+                <a href="{{ path('delete', {'id': superhero.id}) }}"><span class="glyphicon glyphicon-trash"></span> </a>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}

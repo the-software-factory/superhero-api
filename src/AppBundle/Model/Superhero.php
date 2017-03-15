@@ -60,6 +60,29 @@ class Superhero
     private $birthDate;
 
     /**
+     * @ORM\Column(name="avatar", type="string")
+     * @Assert\NotNull()
+     * @var string
+     */
+    private $avatar = 'http://placehold.it/150x300';
+
+    /**
+     * @return string
+     */
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     */
+    public function setAvatar(string $avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
