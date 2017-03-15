@@ -2,31 +2,23 @@
 
 {% block body %}
     <div class="container">
-        <h3>The Greatest Superhero App</h3>
-        {% if is_granted('ROLE_ADMIN') %}
-            Create a new Team <a class="btn btn-success" href="{{ path('create_team') }}"><span class="glyphicon glyphicon-plus"></span></a>
-        {% endif %}
-        <br><br>
-        <table class="table table-striped">
-            <th>#</th>
-            <th>Team</th>
-            <th>HQ</th>
-            <th>Action</th>
-            {% for team in teams %}
-                <tr>
-                    <td>{{ team.id }}</td>
-                    <td>{{ team.name }}</td>
-                    <td>{{ team.hq }}</td>
-                    <td><a href=""><span
-                                    class="glyphicon glyphicon-eye-open"></span></a>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <a href=""><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a href="{{ path('delete_team', {'id':team.id}) }}"><span class="glyphicon glyphicon-trash"></span></a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+        <div class="row">
+            {%for team in teams%}
+                <div class="col-md-6 col-sm-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"> <h2>{{team.name}}</h2></div>
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>Nome Reale: {{team.name}}</li>
+                                    <li>HQ: {{team.hq}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {%endfor%}
+        </div>
     </div>
 {% endblock %}
 

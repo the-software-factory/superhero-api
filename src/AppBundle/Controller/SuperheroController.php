@@ -4,6 +4,7 @@ namespace AppBundle\Controller;         //DEVE COMBACIARE CON QUELLO SOTTO src
 
 use AppBundle\Model\Superhero;
 use AppBundle\Form\SuperheroForm;
+use AppBundle\Model\Team;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,9 +25,13 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superheroes = $repository->findAll();
 
+        $repository = $this->getDoctrine()->getRepository(Team::class);      //lo faccio due volte per andare a prendere anche i dati di tea
+        $teams = $repository->findAll();
+
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'superheroes' => $superheroes,
+            'teams' => $teams                                      //perche ho voluto creare due pagine di creazione nella homepage
         ]);
     }
 

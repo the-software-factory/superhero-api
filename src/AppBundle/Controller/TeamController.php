@@ -39,7 +39,7 @@ class TeamController extends Controller
         ]);
     }
 
-    
+
     
     
 
@@ -59,7 +59,7 @@ class TeamController extends Controller
             $entityManager = $this->getDoctrine()->getManager();     //per salvare il mio supereroe nel db
             $entityManager->persist($team);
             $entityManager->flush();
-            return $this->redirectToRoute('homepage_team', ['id' => $team->getId()]);        //se la post è valida, il browser mi porta qua
+            return $this->redirectToRoute('homepage', ['id' => $team->getId()]);        //se la post è valida, il browser mi porta qua
         }
 
         return $this->render(
@@ -88,6 +88,6 @@ class TeamController extends Controller
             $entityManager->remove($team);
             $entityManager->flush();
 
-            return $this->redirectToRoute('homepage_team');
+            return $this->redirectToRoute('homepage');
         }
     }
