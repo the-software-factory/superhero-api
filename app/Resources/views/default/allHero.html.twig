@@ -3,29 +3,29 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            {%for superhero in superheroes%}
+            {% for superhero in superheroes %}
                 <div class="col-md-4 col-sm-6">
                     <div class="panel panel-info">
-                        <div class="panel-heading"> <h2>{{superhero.name}}</h2></div>
+                        <div class="panel-heading"><h2>{{ superhero.name }}</h2></div>
                         <div class="panel-body">
                             <ul>
-                                <li>Nome Reale: {{superhero.realName}}</li>
-                                <li>Luogo: {{superhero.location}}</li>
+                                <li>Nome Reale: {{ superhero.realName }}</li>
+                                <li>Luogo: {{ superhero.location }}</li>
                                 <li>Ha il Mantello?
                                     {% if superhero.hasCloak %}
                                         <span class="glyphicon glyphicon-ok"></span>
-                                    {%else%}
+                                    {% else %}
                                         <span class="glyphicon glyphicon-remove"></span>
-                                    {%endif%}
+                                    {% endif %}
                                 </li>
-                                <li>Data di nascita: {{superhero.birthDate|date("d/m/Y")}}</li>
+                                <li>Data di nascita: {{ superhero.birthDate|date("d/m/Y") }}</li>
                             </ul>
 
-                            <a href="{{path('detail',{'id':superhero.id})}}"> Vedi Scheda...</a>
+                            <a href="{{ path('detail',{'id':superhero.id}) }}"> Vedi Scheda...</a>
                         </div>
                     </div>
                 </div>
-            {%endfor%}
+            {% endfor %}
         </div>
     </div>
 
@@ -35,11 +35,13 @@
 {% block stylesheets %}
     <style>
         @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina');
-        .panel-body{
+
+        .panel-body {
             font-size: 18px;
             color: #565656;
         }
-        .panel-heading>h2{
+
+        .panel-heading > h2 {
             font-size: 32px;;
             margin-top: 5px;
             margin-bottom: 5px;
