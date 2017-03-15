@@ -46,8 +46,11 @@ class SuperheroForm extends AbstractType
             'birthDate',
             BirthdayType::class,
             [
-            'placeholder'=> 'Select one',
+                'placeholder' => 'Select one',
             ]
+        )->add(
+            'avatar',
+            TextType::class
         )->add(
             'submit',           //per il bottone
             SubmitType::class

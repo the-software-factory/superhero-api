@@ -1,46 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table class="table">
-        <th><span class="label label-default">Nome</span></th>
-        <th><span class="label label-primary">Nome Reale</span></th>
-        <th><span class="label label-success">Città</span></th>
-        <th><span class="label label-info">Mantello</span></th>
-        <th><span class="label label-danger">Data di Nascita</span></th>
-        <tr>
-            <td><span class="label label-default">{{ superhero.name }}</span></td>
-            <td><span class="label label-primary">{{ superhero.realName }}</span></td>
-            <td><span class="label label-success">{{ superhero.location }}</span></td>
-            <td><span class="label label-info">    {% if (superhero.hasCloak) %}
-                        <span class="glyphicon glyphicon-ok"></span>
-                                        {% else %}
-                        <span class="glyphicon glyphicon-remove"></span>
-                    {% endif %}</span></td>
-            <td><span class="label label-danger"> {{ superhero.birthDate|date("d/m/Y") }}</span></td>
-        </tr>
-    </table>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">{{ superhero.name }}</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <li>Nome: {{ superhero.name }} </li>
+                            <li>Nome reale: {{ superhero.realName }}</li>
+                            <li>Luogo: {{ superhero.location }}</li>
+                            <li>Ha il mantello?: {% if superhero.hasCloak %}
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                {% endif %}</li>
+                            <li>Data di nascita: {{ superhero.birthDate | date }}</li>
+                                                    </div>
+                        <div class="col-md-6">
+                            <div class="image"><img src="{{ superhero.avatar }}" class="img-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn btn-warning" href="{{ path('edit', {'id':superhero.id}) }}"><span
+                    class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-info" href="{{ path('delete', {'id':superhero.id}) }}"><span
+                    class="glyphicon glyphicon-trash"></span></a>
+
+    </div>
+
+
 {% endblock %}
 
 
  {% block stylesheets %}
-     <style>
-         h1 {
-             margin-left: 20px;
-             font-family: 'Baloo Bhaina', cursive;
-             font-size: 20px;
-         }
-         
-         .table {
-             width: 100%;
-             align-items: center;
-         }
-         
-         th{
-             font-size: 40px;
-         }
 
-         td{
-             font-size: 25px;
-         }
-     </style>
  {% endblock %}

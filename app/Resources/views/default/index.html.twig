@@ -6,12 +6,14 @@
         Create a new superhero <a class="btn btn-success" href="{{ path('create') }}"><span class="glyphicon glyphicon-plus"></span></a>
         <br><br>
         <table class="table table-striped">
+            <th>Avatar</th>
             <th>#</th>
             <th>Hero</th>
             <th>Real Name</th>
             <th>Action</th>
             {% for superhero in superheroes %}
                 <tr>
+                    <td><img src="{{ superhero.avatar }}" class="img-circle" width="40px"></td>
                     <td>{{ superhero.id }}</td>
                     <td>{{ superhero.name }}</td>
                     <td>{{ superhero.realName }}</td>

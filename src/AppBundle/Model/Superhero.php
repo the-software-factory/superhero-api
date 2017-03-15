@@ -75,13 +75,33 @@ class Superhero
     /**
      * @ORM\Column(name="birth_date", type="datetime")
      * @Assert\NotNull
-     * @var datetime
+     * @var \DateTime
      */
     private $birthDate;
 
 
+/**
+ * @ORM\Column(name="avatar", type="string")
+ * @Assert\NotNull
+ * @var string
+ */
+    private $avatar="http://placehold.it/150x350";
 
-    public function getLocation(): ?string
+
+
+public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+
+    public function setAvatar($avatar)
+{
+    $this->avatar = $avatar;
+}
+
+
+public function getLocation(): ?string
     {
         return $this->location;
     }

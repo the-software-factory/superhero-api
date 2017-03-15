@@ -1,10 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate'}}) }}
 
-  <h1>Create new superhero</h1>
+    <h1>Create new superhero</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_row(form.name) }}</div>
+            <div class="col-md-4">
+                {{ form_row(form.realName) }}</div>
+            <div class="col-md-4">
+                {{ form_row(form.location) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_row(form.hasCloak) }}</div>
+            <div class="col-md-4">
+                {{ form_row(form.birthDate) }}</div>
+            <div class="col-md-4">
+                {{ form_row(form.avatar) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_label(form.submit) }}
+                {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-success'}}) }}
+            </div>
+        </div>
+    </div>
 
-    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}    {#disattivo la validazione HTML5#}
+
+    {{ form_end(form) }}
+
+{#      {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}    {#         disattivo la validazione HTML5       #}
 
 {% endblock %}
 

@@ -36,7 +36,6 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
      */
     public function allHeroAction(Request $request)
     {
-
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superheroes = $repository->findAll();
 
@@ -50,7 +49,6 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
     /**
      * @Route("/detail/{id}", name="detail")
      */
-
     public function detailAction(Request $request, $id)
     {
 
