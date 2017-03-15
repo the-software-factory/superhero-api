@@ -13,6 +13,7 @@ namespace AppBundle\Model;
  * @ORM\Entity()
  */
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -22,7 +23,8 @@ class Team
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
+     * @ORM\OneToMany(targetEntity="AppBundle\Model\Superhero", mappedBy="team_id")
+     * @var ArrayCollection
      */
     private $id;
     

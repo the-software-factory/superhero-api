@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;         //DEVE COMBACIARE CON QUELLO SOTTO src
 
-use AppBundle\Model\Superevil;
 use AppBundle\Model\Superhero;
 use AppBundle\Form\SuperheroForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

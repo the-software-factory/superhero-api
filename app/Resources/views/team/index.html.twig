@@ -21,7 +21,7 @@
                                     class="glyphicon glyphicon-eye-open"></span></a>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a href=""><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a href=""><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="{{ path('delete_team', {'id':team.id}) }}"><span class="glyphicon glyphicon-trash"></span></a>
                         {% endif %}
                     </td>
                 </tr>
