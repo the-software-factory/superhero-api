@@ -33,7 +33,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                <a class="navbar-brand" href="{{ path('allHero') }}">ShowAllHeroes</a>
+                {{ knp_menu_render('AppBundle:Builder:mainMenu') }}   {#richiamo la funzione in Builder.php(Menu) per riportare i menu#}
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">

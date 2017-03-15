@@ -172,28 +172,5 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
 
         return $this->redirectToRoute('homepage');
     }
-
     
-    
-    
-    /**
-     * @Route("superhero/evil", name="evil")
-     */
-
-    public function evilAction(Request $request)
-    {
-        $superevil = new Superevil('Miami');
-        $superevil->setName('Joker');
-        $superevil->setPower('Fire');
-        $superevil->setRealName('Marco');
-
-        $superevil2 = new Superevil('Gualdo');
-        $superevil2->setName('Stregone');
-        $superevil2->setRealName('Luca');
-
-        return $this->render('default/evil.html.twig', [
-            'evil' => $superevil,
-            'evil2' => $superevil2,
-        ]);
-    }
 }

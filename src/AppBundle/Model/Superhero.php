@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraints as Assert;       //aggiunto da me
 
 class Superhero
 {
-
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -66,7 +65,7 @@ class Superhero
 
     /**
      * @ORM\Column(name="has_cloak", type="boolean")
-     * @Assert\NotNull     *
+     * @Assert\NotNull     
      * @var bool
      */
     private $hasCloak;
@@ -79,13 +78,16 @@ class Superhero
      */
     private $birthDate;
 
-
-/**
- * @ORM\Column(name="avatar", type="string")
- * @Assert\NotNull
- * @var string
- */
+    
+    /**
+     * @ORM\Column(name="avatar", type="string")
+     * @Assert\NotNull
+     * @var string
+     */
     private $avatar="http://placehold.it/150x350";
+    
+
+    private $group;
 
 
 
@@ -111,7 +113,8 @@ public function getLocation(): ?string
 
     /**
      * @param mixed $location
-     *      */
+     *   
+     */
     public function setLocation($location)
     {
         $this->location = $location;
