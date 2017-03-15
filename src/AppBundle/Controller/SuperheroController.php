@@ -9,9 +9,8 @@ use AppBundle\Model\Superhero;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 //rotta di base, cioe tutte le altre devono avere questa prima
 /**
@@ -44,6 +43,13 @@ class SuperheroController extends Controller
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superhero = $repository->find($id);
 
+        //gestione di quando cerco di accedere a un eroe non presente nel db
+        if($superhero==null){
+            //eccezione che il framework trasforma in una risposta 404
+            // e lo stesso che il framework fa per me se accedo a una rotta che non esiste
+            throw $this->createNotFoundException();
+        }
+
         return $this->render(
           'default/detail.html.twig',
             [
@@ -58,6 +64,7 @@ class SuperheroController extends Controller
      * @Method({"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function createAction(Request $request){
 
@@ -94,6 +101,7 @@ class SuperheroController extends Controller
      * @param Request $request
      * @Route("/edit/{id}", name="edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $id){
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
@@ -101,6 +109,12 @@ class SuperheroController extends Controller
 
         $form = $this->createForm(SuperheroForm::class, $superhero);
         $form->handleRequest($request);
+
+        if($superhero==null){
+            //eccezione che il framework trasforma in una risposta 404
+            // e lo stesso che il framework fa per me se accedo a una rotta che non esiste
+            throw $this->createNotFoundException();
+        }
 
         if($form->isValid() && $form->isSubmitted()){
             $entityManager = $this->getDoctrine()->getManager();
@@ -119,10 +133,17 @@ class SuperheroController extends Controller
 
     /**
      * @Route("delete/{id}", name="delete")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction($id){
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superhero = $repository->find($id);
+
+        if($superhero==null){
+            //eccezione che il framework trasforma in una risposta 404
+            // e lo stesso che il framework fa per me se accedo a una rotta che non esiste
+            throw $this->createNotFoundException();
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($superhero);

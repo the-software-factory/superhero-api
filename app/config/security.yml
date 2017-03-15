@@ -5,7 +5,14 @@ security:
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
-            memory: ~
+            memory:
+              users:
+                user:
+                    password: $2y$12$r1SL3XQsX4tbPQGMggCEseWyc/w6f5g0/0lRPzkSE9B.nO2cgecmy
+                    roles: 'ROLE_USER'
+                admin:
+                    password: $2y$12$C/rV8nF8y8ubHPPov2naIugAj6mt6AvpzoeGiPDwgwp5QXOZCzsxm
+                    roles: 'ROLE_ADMIN'
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -16,9 +23,26 @@ security:
         main:
             anonymous: ~
             # activate different ways to authenticate
+            form_login:
+                      login_path: login
+                      check_path: login
 
+            logout:
+                    path:   /logout
+                    target: homepage
+
+    access_control:
+        - { path: ^/superhero, roles: [ROLE_ADMIN, ROLE_USER] }
             # http_basic: ~
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    encoders:
+            Symfony\Component\Security\Core\User\User:
+                        algorithm: bcrypt
+                        cost: 12
+    #questo dice che admin e' anche user
+    role_hierarchy:
+            ROLE_ADMIN:       ROLE_USER

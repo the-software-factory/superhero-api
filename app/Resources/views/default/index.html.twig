@@ -2,7 +2,9 @@
 
 {% block body %}
     <div class="container">
-        <a href="{{ path('create') }}"><button>Create new</button></a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('create') }}"><button>Create new</button></a>
+        {% endif %}
         <div class="list-group">
             <table class="table table-striped">
                 <tr>
@@ -17,8 +19,10 @@
                         <td>{{ superhero.realName }}</td>
                         <td>
                             <a href="{{ path('detail', {'id' : superhero.id}) }}" class="glyphicon glyphicon-eye-open"></a>
-                            <a href="{{ path('edit', {'id' : superhero.id}) }}" class="glyphicon glyphicon-pencil"></a>
-                            <a href="{{ path('delete', {'id' : superhero.id}) }}" class="glyphicon glyphicon-trash"></a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('edit', {'id' : superhero.id}) }}" class="glyphicon glyphicon-pencil"></a>
+                                <a href="{{ path('delete', {'id' : superhero.id}) }}" class="glyphicon glyphicon-trash"></a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
