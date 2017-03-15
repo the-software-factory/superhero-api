@@ -3,10 +3,23 @@
 security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        Symfony\Component\Security\Core\User\User: #plaintext #plaintext lascia la password in chiaro, il framework non la lavora per niente
+            algorithm: bcrypt #il login non funziona più con la password 123abc normale, ma va criptata
+            cost: 12          #si cripta da git bash con il comando 'php bin/console security:encode-password [password]'
+
     providers:
         in_memory:
-            memory: ~
-
+            memory:
+               users:
+                  admin:
+                     password: $2y$12$ajHJFxmkNbRZelqXMhG9HunngR/Vun8Zq2fR7ugWvsXQGTcYss8uK #123abc
+                     roles: 'ROLE_ADMIN'
+                  user:
+                     password: $2y$12$MQSZusuNqDh3c7eIom.fGeaBbqzCAJU4dDdBIzreHwBpHEO55p9t6 #qwerty
+                     roles: 'ROLE_USER'
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -15,6 +28,16 @@ security:
 
         main:
             anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login
+            logout:
+                path: logout
+                target: homepage
+
+    access_control:
+        - { path: ^/superhero, roles: [ROLE_ADMIN, ROLE_USER]}
+
             # activate different ways to authenticate
 
             # http_basic: ~
