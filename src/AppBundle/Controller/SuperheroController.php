@@ -7,6 +7,7 @@ use AppBundle\Model\Superhero;
 use AppBundle\Form\SuperheroForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,6 +55,9 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
 
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superhero = $repository->find($id);
+        if($superhero===null){                                      //se non trova l'eroe
+            throw  $this->createNotFoundException();                //fa questo
+        }
 
         return $this->render(
             'default/detail.html.twig',         //non abbiamo il template, lo andiamo a creare all'interno di default
@@ -67,7 +71,9 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
     /**
      * @Route("/create", name="create")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
+
     public function createAction(Request $request)
     {
         $superhero = new Superhero();
@@ -75,7 +81,7 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
         $form = $this->createForm(SuperheroForm::class, $superhero);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {         //controllo che il form sia spedito e sia valido
+        if ($form->isSubmitted() && $form->isValid()) {              //controllo che il form sia spedito e sia valido
             $entityManager = $this->getDoctrine()->getManager();     //per salvare il mio supereroe nel db
             $entityManager->persist($superhero);
             $entityManager->flush();
@@ -93,12 +99,9 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
 
 
 
+    /*rotta
 
-    /*
-     * @Route("/create", name="create")
-     */
-    /*
-     * public function createAction(Request $request){
+      public function createAction(Request $request){
         $superhero= new Superhero();
         $superhero->setName('Batman');       //INCAPSULAMENTO , RICHIAMO FUNZIONE PER SCRIVERE VARIABILE PRIVATA
         $superhero->setRealName('Clark Kent');
@@ -119,12 +122,17 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
     /**
      * @Route("/edit/{id}", name="edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $id)
     {
 
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superhero = $repository->find($id);
+
+        if($superhero===null){                                      //se non trova l'eroe
+            throw  $this->createNotFoundException();                //fa questo
+        }
 
         $form = $this->createForm(SuperheroForm::class, $superhero);
         $form->handleRequest($request);
@@ -148,10 +156,16 @@ class SuperheroController extends Controller            //HO CAMBIATO IL NOME
     /**
      * @Route("/delete/{id}", name="delete")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction($id){
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
         $superhero = $repository->find($id);
+
+        if($superhero===null){                                      //se non trova l'eroe
+            throw  $this->createNotFoundException();                //fa questo
+        }
+
         $entityManager=$this->getDoctrine()->getManager();
         $entityManager->remove($superhero);
         $entityManager->flush();

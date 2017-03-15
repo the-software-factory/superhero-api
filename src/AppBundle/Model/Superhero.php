@@ -95,6 +95,9 @@ public function getAvatar(): ?string
     }
 
 
+  /**
+   * @param mixed $location
+   *      */
     public function setAvatar($avatar)
 {
     $this->avatar = $avatar;

@@ -3,7 +3,9 @@
 {% block body %}
     <div class="container">
         <h3>The Greatest Superhero App</h3>
+        {% if is_granted('ROLE_ADMIN') %}
         Create a new superhero <a class="btn btn-success" href="{{ path('create') }}"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
         <br><br>
         <table class="table table-striped">
             <th>Avatar</th>
@@ -19,8 +21,10 @@
                     <td>{{ superhero.realName }}</td>
                     <td><a href="{{ path('detail', {'id':superhero.id}) }}"><span
                                     class="glyphicon glyphicon-eye-open"></span></a>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('edit', {'id':superhero.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a href="{{ path('delete', {'id':superhero.id}) }}"><span class="glyphicon glyphicon-trash"></span></a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
