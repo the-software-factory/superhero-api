@@ -134,7 +134,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"Iron Man\",\n  \"realName\": \"Anthony Stark\",\n  \"hasCloak\": true,\n  \"location\": \"New York\",\n  \"birthDate\": \"1965-05-06\"\n}\n"
+					"raw": "{\n  \"name\": \"Iron Man 2\",\n  \"realName\": \"Anthony Stark\",\n  \"hasCloak\": true,\n  \"location\": \"New York\",\n  \"picture\": \"http://some-picture\",\n  \"birthDate\": \"1965-05-06\"\n}\n"
 				},
 				"description": ""
 			},
