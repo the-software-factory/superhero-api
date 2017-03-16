@@ -28,7 +28,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="{{ path('allHeroes') }}">Schede Eroi</a>
+                            {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
                         </li>
                         {%  if is_granted('ROLE_ADMIN') %}
                             <li>

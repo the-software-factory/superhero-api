@@ -67,6 +67,12 @@ class Superhero
     private $avatar = 'http://placehold.it/150x300';
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Model\Team", inversedBy="id")
+     * @var Team
+     */
+    private $team_id;
+
+    /**
      * @return string
      */
     public function getAvatar(): string

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1>The Gratest Superhero App</h1>
+        </div>
+        <div class="row">
+            {%  if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('create_team') }}">
+                    <button class="btn-success">Create new team</button>
+                </a>
+            {% endif %}
+        </div>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Headquarter</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {%for team in teams%}
+                    <tr>
+                        <td>{{team.id}}</td>
+                        <td>{{team.name}}</td>
+                        <td>{{team.hq}}</td>
+                        <td>
+                            <a href="{{ path('detail', {'id': team.id}) }}"><span class="glyphicon glyphicon-eye-open"></span> </a>
+                            {%  if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('edit', {'id': team.id}) }}"><span class="glyphicon glyphicon-pencil"></span> </a>
+                                <a href="{{ path('delete_team', {'id': team.id}) }}"><span class="glyphicon glyphicon-trash"></span> </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
