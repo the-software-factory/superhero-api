@@ -39,6 +39,9 @@ class SuperheroForm extends AbstractType
                 'widget' => 'single_text',
             ]
         )->add(
+            'picture',
+            TextType::class
+        )->add(
             'submit',
             SubmitType::class
         );

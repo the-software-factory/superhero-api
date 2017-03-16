@@ -55,6 +55,28 @@ class Superhero
     private $birthDate;
 
     /**
+     * @ORM\Column(name="picture", type="string", nullable=true)
+     * @var string
+     */
+    private $picture;
+
+    /**
+     * @return mixed
+     */
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture(?string $picture)
+    {
+        $this->picture = $picture;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int

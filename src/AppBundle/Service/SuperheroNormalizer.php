@@ -20,6 +20,7 @@ class SuperheroNormalizer implements NormalizerInterface
             'realName' => $object->getRealName(),
             'location' => $object->getLocation(),
             'hasCloak' => $object->hasCloak(),
+            'picture' => $object->getPicture(),
             'birthDate' => $object->getBirthDate()->format('Y-m-d'),
         ];
     }
