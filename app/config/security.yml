@@ -32,4 +32,4 @@ security:
             http_basic: ~
 
     access_control:
-        - { path: ^/api/superhero, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/api/superheroes, roles: [ROLE_ADMIN, ROLE_USER] }
