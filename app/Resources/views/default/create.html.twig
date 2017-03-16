@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="container">
+    <h1>Create new Superhero</h1>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.name) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(form.realName) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(form.location) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.hasCloak) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.birthDate) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.avatar) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.team) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_label(form.submit)}} 
+            {{ form_widget(form.submit,{'attr':{'class':'btn btn-success'}})}}
+        </div>
+
+    </div>
+
+
+</div>
+{{ form_end(form) }}
+
+{% endblock %}
