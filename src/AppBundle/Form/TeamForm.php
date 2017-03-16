@@ -6,15 +6,13 @@
  * Time: 10.01
  */
 namespace AppBundle\Form;
-use AppBundle\Model\Superhero;
+use AppBundle\Model\Team;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-class SuperheroForm extends AbstractType
+class TeamForm extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -24,27 +22,12 @@ class SuperheroForm extends AbstractType
     {
         $builder->add(
             'name',
-            TextType::class//stesso nome messo nel setter (il setter si chiama setName, quindi Name in minuscolo)
-        )->add(
-            'realName',
-            TextType::class
-        )->add(
-            'location',
-            TextType::class
-        )->add(
-            'hasCloak',
-            CheckboxType::class,
+            TextType::class,
             [
-                'label' => 'Cloak',           //mi cambia il nome del form, guarda sul path create
+                'label' => 'Team Name',           //mi cambia il nome del form, guarda sul path create
             ]
         )->add(
-            'birthDate',
-            BirthdayType::class,
-            [
-                'placeholder' => 'Select one',
-            ]
-        )->add(
-            'avatar',
+            'hq',
             TextType::class
         )->add(
             'submit',           //per il bottone
@@ -53,6 +36,6 @@ class SuperheroForm extends AbstractType
     }
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('data_class', Superhero::class);
+        $resolver->setDefault('data_class', Team::class);
     }
 }

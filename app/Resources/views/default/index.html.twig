@@ -2,45 +2,37 @@
 
 {% block body %}
     <div class="container">
+        <h3>The Greatest Superhero App</h3>
         <div class="row">
-            <h1>The Greatest Superhero App</h1>
-        </div>
-        <div class="row">
-            <a class="btn btn-success" href="{{ path('create') }}">Create new superhero</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-success" href="{{ path('create') }}">Create a new superhero</a>
+            {% endif %}
             <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Hero</th>
-                    <th>Real Name</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
+                <th>#</th>
+                <th>Avatar</th>
+                <th>Hero</th>
+                <th>Real Name</th>
+                <th>Action</th>
                 {% for superhero in superheroes %}
                     <tr>
-                        <td>{{ superhero.id }}</td>
+                        <td></td>
+                        <td><img src="{{ superhero.avatar }}" class="img-circle" alt="" height="40px" width="40px"></td>
                         <td>{{ superhero.name }}</td>
                         <td>{{ superhero.realName }}</td>
-                        <td>
-                            <a href="{{ path('detail',{'id':superhero.id}) }}"><span
-                                        class="glyphicon glyphicon-eye-open"></span> </a>
-
-                            <a href="{{ path('edit', {'id': superhero.id}) }}"><span
-                                        class="glyphicon glyphicon-pencil"></span> </a>
-
-                            <a href="{{ path('delete', {'id': superhero.id}) }}"><span
-                                        class="glyphicon glyphicon-trash"></span> </a>
+                        <td><a href="{{ path('detail', {'id':superhero.id}) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('edit', {'id':superhero.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="{{ path('delete', {'id':superhero.id}) }}"><span class="glyphicon glyphicon-share-alt"></span></a>
+                            {% endif %}
                         </td>
+
                     </tr>
                 {% endfor %}
-                </tbody>
             </table>
-
         </div>
     </div>
 {% endblock %}
 
-{% block stylesheets %}
 
+{% block stylesheets %}
 {% endblock %}

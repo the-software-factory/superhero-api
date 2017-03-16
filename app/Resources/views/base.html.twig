@@ -1,14 +1,21 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8" />
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet"/>  {#LINK google font#}
+    {% block stylesheets %}
+    {% endblock %}
 
-    {% block stylesheets %}{% endblock %}
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
+
+
+
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -20,26 +27,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{path('homepage')}}">SuperHero App</a>
+            <a class="navbar-brand" href="{{ path('homepage') }}">SuperheroApp Homepage</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="{{path('allHero')}}">Schede Eroi</a></li>
-            </ul>
+
+            {{ knp_menu_render('AppBundle:Builder:mainMenu') }}   {#richiamo la funzione in Builder.php(Menu) per riportare i menu#}
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
                 <li class="dropdown">
-
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><icon class="glyphicon glyphicon-user"/>Pippo<span class="caret"></span></a>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"/>{{ app.user.username }} <span class="caret"></span></a>
+                    {% endif %}
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                        <li><a href="{{ path('logout') }}">logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -47,10 +49,12 @@
     </div><!-- /.container-fluid -->
 </nav>
 
+
 {% block body %}{% endblock %}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-{% block javascripts %}
-{% endblock %}
+
+{% block javascripts %}{% endblock %}
 </body>
 </html>

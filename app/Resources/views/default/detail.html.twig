@@ -1,12 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>{{ superhero.name }}</h1>
-    <ul>
-        <li>Nome: {{ superhero.name }}</li>
-        <li>Nome reale: {{ superhero.realName }}</li>
-        <li>Luogo: {{ superhero.location }}</li>
-        <li>Ha il mantello?: {{ superhero.hasCloak }}</li>
-        <li>Data di nascita: {{ superhero.birthDate | date }}</li>
-    </ul>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">{{ superhero.name }}</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <li>Nome: {{ superhero.name }} </li>
+                            <li>Nome reale: {{ superhero.realName }}</li>
+                            <li>Luogo: {{ superhero.location }}</li>
+                            <li>Ha il mantello?: {% if superhero.hasCloak %}
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                {% endif %}</li>
+                            <li>Data di nascita: {{ superhero.birthDate | date }}</li>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="image"><img src="{{ superhero.avatar }}" class="img-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn btn-warning" href="{{ path('edit', {'id':superhero.id}) }}"><span
+                    class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-info" href="{{ path('delete', {'id':superhero.id}) }}"><span
+                    class="glyphicon glyphicon-trash"></span></a>
+
+    </div>
+
+
 {% endblock %}
+
+
+ {% block stylesheets %}
+
+ {% endblock %}
