@@ -29,12 +29,7 @@ security:
 
         main:
             anonymous: ~
-            form_login:
-                login_path: login
-                check_path: login
-            logout:
-                path: logout
-                target: homepage
+            http_basic: ~
 
     access_control:
-        - { path: ^/superhero, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/api/superhero, roles: [ROLE_ADMIN, ROLE_USER] }

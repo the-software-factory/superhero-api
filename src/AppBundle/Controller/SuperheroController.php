@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace AppBundle\Controller;
 
@@ -9,35 +10,34 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * @Route("superhero")
+ * @Route("/api/superheroes")
  */
 class SuperheroController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("", name="api_superheroes_list")
+     * @Method("GET")
      * @Security("has_role('ROLE_USER')")
      */
-    public function indexAction(Request $request)
+    public function listAction()
     {
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
 
         $superheroes = $repository->findAll();
 
-        return $this->render(
-            'default/index.html.twig',
-            [
-                'superheroes' => $superheroes,
-            ]
-        );
+        // NOTE: missing pagination
+        return $this->json($superheroes);
     }
 
     /**
-     * @Route("/detail/{id}", name="detail")
+     * @Route("/{id}", name="api_superheroes_view")
+     * @Method("GET")
      * @Security("has_role('ROLE_USER')")
      */
-    public function detailAction($id)
+    public function viewAction($id)
     {
         $repository = $this->getDoctrine()->getRepository(Superhero::class);
 
@@ -46,17 +46,12 @@ class SuperheroController extends Controller
             throw $this->createNotFoundException();
         }
 
-        return $this->render(
-            'default/detail.html.twig',
-            [
-                'superhero' => $superhero,
-            ]
-        );
+        return $this->json($superhero);
     }
 
     /**
-     * @Route("/create", name="create")
-     * @Method({"GET", "POST"})
+     * @Route("", name="api_superheroes_create")
+     * @Method("POST")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function createAction(Request $request)
@@ -65,26 +60,23 @@ class SuperheroController extends Controller
 
         $form = $this->createForm(SuperheroForm::class, $superhero);
 
+        $this->decodeJsonRequestBody($request);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($superhero);
-            $entityManager->flush();
-            return $this->redirectToRoute('detail', [ 'id' => $superhero->getId() ]);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            throw new BadRequestHttpException('Invalid request.');
         }
 
-        return $this->render(
-            'default/create.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($superhero);
+        $entityManager->flush();
+
+        return $this->json($superhero, 201);
     }
 
     /**
-     * @Route("/edit/{id}", name="edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}", name="api_superheroes_edit")
+     * @Method("PATCH")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $id)
@@ -96,23 +88,23 @@ class SuperheroController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(SuperheroForm::class, $superhero);
+        $form = $this->createForm(SuperheroForm::class, $superhero, [ 'method' => 'PATCH' ]);
+
+        $this->decodeJsonRequestBody($request);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('detail', [ 'id' => $superhero->getId() ]);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return new BadRequestHttpException('Invalid request.');
         }
 
-        return $this->render(
-            'default/edit.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json($superhero, 200);
     }
 
     /**
-     * @Route("/delete/{id}", name="delete")
+     * @Route("/{id}", name="api_superheroes_delete")
+     * @Method("DELETE")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction($id)
@@ -128,21 +120,26 @@ class SuperheroController extends Controller
         $entityManager->remove($superhero);
         $entityManager->flush();
 
-        return $this->redirectToRoute('homepage');
+        return $this->json(null, 204);
     }
 
     /**
-     * @Route("/allHero", name="allHero")
-     * @Security("has_role('ROLE_USER')")
+     * Replaces the request body with the json-decoded version.
      */
-    public function allHeroAction(Request $request)
+    private function decodeJsonRequestBody(Request $request): Request
     {
-        $repository=$this->getDoctrine()->getRepository(Superhero::class);
-        $superheroes = $repository->findAll();
-        // replace this example code with whatever you need
-        return $this->render('default/allHero.html.twig',
-            [
-                'superheroes' => $superheroes
-            ]);
+        // Do not try to json_decode when no body, or for non json requests.
+        if (empty($request->getContent())) {
+            return $request;
+        }
+
+        $decodedData = json_decode($request->getContent(), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new BadRequestHttpException('Provided request is not a valid JSON.');
+        }
+
+        $request->request->replace($decodedData);
+
+        return $request;
     }
 }

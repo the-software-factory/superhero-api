@@ -36,6 +36,7 @@ class SuperheroForm extends AbstractType
             BirthdayType::class,
             [
                 'placeholder' => 'Select one',
+                'widget' => 'single_text',
             ]
         )->add(
             'submit',
@@ -46,5 +47,10 @@ class SuperheroForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefault('data_class', Superhero::class);
+    }
+
+    public function getBlockPrefix()
+    {
+        return '';
     }
 }
