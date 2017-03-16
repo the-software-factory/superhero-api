@@ -15,10 +15,15 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
-    form:            ~
-    csrf_protection: ~
+    #form:            ~
+    #csrf_protection: ~
+
+    form:
+        csrf_protection:
+            enabled: false
+
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
+    serializer: { enabled: true }
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -38,12 +43,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form_themes:
-        - 'bootstrap_3_layout.html.twig'
- #   form:
-  #      resources: ['bootstrap_3_layout.html.twig']
-        # resources: ['bootstrap_3_horizontal_layout.html.twig']
-
 
 # Doctrine Configuration
 doctrine:
@@ -65,15 +64,12 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
-        #auto_mapping: true
         mappings:
-          AppBundle:
-            type: annotation
-            dir: 'Model'
-            prefix: AppBundle\Model
-            is_bundle: true
-
-
+            AppBundle:
+                type: annotation
+                dir: 'Model'
+                prefix: AppBundle\Model
+                is_bundle: true
 
 # Swiftmailer Configuration
 swiftmailer:

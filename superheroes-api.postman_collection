@@ -1,0 +1,189 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Superheroes API",
+		"_postman_id": "0ea0131a-8b70-ca2c-a2c4-905de05c740b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Superheroes",
+			"request": {
+				"url": "http://localhost/app_dev.php/api/superheroes",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Superhero",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "admin",
+						"password": "123abc",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": {
+					"raw": "http://localhost/app_dev.php/api/superheroes/:id",
+					"protocol": "http",
+					"auth": {},
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"app_dev.php",
+						"api",
+						"superheroes",
+						":id"
+					],
+					"variable": [
+						{
+							"value": "1",
+							"id": "id"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46MTIzYWJj",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Superhero",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "admin",
+						"password": "123abc",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://localhost/app_dev.php/api/superheroes",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46MTIzYWJj",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Iron Man\",\n  \"realName\": \"Anthony Stark\",\n  \"hasCloak\": false,\n  \"location\": \"New York\",\n  \"birthDate\": \"1965-05-06\"\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Superhero",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "admin",
+						"password": "123abc",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": {
+					"raw": "http://localhost/app_dev.php/api/superheroes/:id",
+					"protocol": "http",
+					"auth": {},
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"app_dev.php",
+						"api",
+						"superheroes",
+						":id"
+					],
+					"variable": [
+						{
+							"value": "4",
+							"id": "id"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46MTIzYWJj",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Iron Man\",\n  \"realName\": \"Anthony Stark\",\n  \"hasCloak\": true,\n  \"location\": \"New York\",\n  \"birthDate\": \"1965-05-06\"\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Superhero",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "admin",
+						"password": "123abc",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": {
+					"raw": "http://localhost/app_dev.php/api/superheroes/:id",
+					"protocol": "http",
+					"auth": {},
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"app_dev.php",
+						"api",
+						"superheroes",
+						":id"
+					],
+					"variable": [
+						{
+							"value": "6",
+							"id": "id"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46MTIzYWJj",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

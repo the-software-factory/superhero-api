@@ -1,9 +1,13 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/service_container.html
-parameters:
-#    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    subscriber_format_exception:
+        class: AppBundle\KernelSubscriber\FormatExceptionSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
+    superhero_normalizer:
+        class: AppBundle\Service\SuperheroNormalizer
+        tags:
+            - { name: serializer.normalizer }

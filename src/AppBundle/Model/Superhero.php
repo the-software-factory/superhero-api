@@ -1,15 +1,11 @@
 <?php
 declare(strict_types=1);
-/**
- * Created by IntelliJ IDEA.
- * User: diego
- * Date: 10/03/17
- * Time: 12:31
- */
 
 namespace AppBundle\Model;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity()
  */
@@ -17,94 +13,53 @@ class Superhero
 {
     /**
      * @ORM\Column(name="id", type="integer")
-     * @ORM\id
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var
+     * @var int
      */
     private $id;
 
     /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @ORM\Column(name="name",type="string")
+     * @ORM\Column(name="name", type="string")
      * @Assert\NotBlank(message="Name is required")
      * @var string
      */
     private $name;
+
     /**
-     * @ORM\Column(name="real_name",type="string")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="real_name", type="string")
+     * @Assert\NotBlank
      * @var string
      */
     private $realName;
+
     /**
-     * @ORM\Column(name="location",type="string")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="location", type="string")
+     * @Assert\NotBlank
      * @var string
      */
     private $location;
+
     /**
-     * @ORM\Column(name="has_cloak",type="boolean")
+     * @ORM\Column(name="has_cloak", type="boolean")
      * @Assert\NotNull
      * @var bool
      */
     private $hasCloak = false;
+
     /**
-     * @ORM\Column(name="birth_date",type="datetime")
+     * @ORM\Column(name="birth_date", type="datetime")
      * @Assert\NotNull
      * @var \DateTime
      */
     private $birthDate;
 
     /**
-     * @ORM\Column(name="avatar",type="string")
-     * @Assert\NotNull
-     * @var string
+     * @return int
      */
-    private $avatar="http://placehold.it/150x300";
-
-    /**
-     * @return string
-     */
-    public function getAvatar(): string
+    public function getId(): int
     {
-        return $this->avatar;
-    }
-
-    /**
-     * @param string $avatar
-     */
-    public function setAvatar(string $avatar)
-    {
-        $this->avatar = $avatar;
-    }
-
-
-
-    /**
-     *
-     * @return string
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
-    {
-        if (strlen($name)==0){
-            throw new \InvalidArgumentException('non vuota');
-        }
-
-        $this->name = $name;
+        return $this->id;
     }
 
     /**
@@ -142,7 +97,7 @@ class Superhero
     /**
      * @return bool
      */
-    public function hasCloak(): ?bool
+    public function hasCloak(): bool
     {
         return $this->hasCloak;
     }
@@ -158,7 +113,7 @@ class Superhero
     /**
      * @return \DateTime
      */
-    public function getBirthDate()
+    public function getBirthDate(): ?\DateTime
     {
         return $this->birthDate;
     }
@@ -171,4 +126,17 @@ class Superhero
         $this->birthDate = $birthDate;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        if (strlen($name) == 0) {
+            throw new \InvalidArgumentException('Superhero name cannot be empty.');
+        }
+
+        $this->name = $name;
+    }
 }
