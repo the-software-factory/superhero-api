@@ -15,24 +15,28 @@ class Superhero
      * @var int
      */
     private $id;
+
     /**
      * @ORM\Column(name="name", type="string")
      * @Assert\NotBlank(message="Name is required")
      * @var string
      */
     private $name;
+
     /**
      * @ORM\Column(name="real_name", type="string")
      * @Assert\NotBlank
      * @var string
      */
     private $realName;
+
     /**
      * @ORM\Column(name="location", type="string")
      * @Assert\NotBlank
      * @var string
      */
     private $location;
+
     /**
      * @ORM\Column(name="has_cloak", type="boolean")
      * @Assert\NotNull
@@ -53,6 +57,10 @@ class Superhero
      * @var \string
      */
     private $avatar="http://placehold.it/150x300";
+
+
+
+
 
     /**
      * @return string
