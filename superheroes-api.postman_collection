@@ -10,9 +10,24 @@
 		{
 			"name": "Superheroes",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "admin",
+						"password": "123abc",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "http://localhost/app_dev.php/api/superheroes",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46MTIzYWJj",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
@@ -173,6 +188,32 @@
 					]
 				},
 				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46MTIzYWJj",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "admin",
+						"password": "123abc",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://localhost/app_dev.php/api/login",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
