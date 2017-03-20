@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -14,6 +16,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserController extends Controller
 {
+    /**
+     * @Route("")
+     * @Route("/{catchAll}")
+     * @Method("OPTIONS")
+     */
+    public function corsAction(Request $request)
+    {
+        $request->headers->all();
+
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', $request->headers->get('Origin'));
+        $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization');
+        return $response;
+    }
+
     /**
      * @Route("/login", name="api_login")
      * @Method("GET")
