@@ -7,6 +7,11 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    subscriber_cors:
+        class: AppBundle\KernelSubscriber\CorsSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
     superhero_normalizer:
         class: AppBundle\Service\SuperheroNormalizer
         tags:
